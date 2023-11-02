@@ -1,5 +1,6 @@
 #include <iostream>
 #include "rigid_body.hxx"
+#include "rbda/rbda.hxx"
 
 
 int main(int, char**){

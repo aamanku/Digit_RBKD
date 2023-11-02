@@ -1,4 +1,4 @@
 #include <iostream>
 #include <cmath>
-#include "rigid_body.hxx
-"
+#include "rigid_body.hxx"
+
