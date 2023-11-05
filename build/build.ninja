@@ -224,6 +224,13 @@ build CMakeFiles/Digit_RBKD.dir/src/main.cpp.o: CXX_COMPILER__Digit_RBKD_unscann
   OBJECT_DIR = CMakeFiles/Digit_RBKD.dir
   OBJECT_FILE_DIR = CMakeFiles/Digit_RBKD.dir/src
 
+build CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o: CXX_COMPILER__Digit_RBKD_unscanned_Debug /home/abhijee/Documents/GitHub/Digit_RBKD/src/tinyxml2.cpp || cmake_object_order_depends_target_Digit_RBKD
+  DEP_FILE = CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/abhijee/Documents/GitHub/Digit_RBKD/include -isystem /usr/include/eigen3
+  OBJECT_DIR = CMakeFiles/Digit_RBKD.dir
+  OBJECT_FILE_DIR = CMakeFiles/Digit_RBKD.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Digit_RBKD
@@ -232,7 +239,7 @@ build CMakeFiles/Digit_RBKD.dir/src/main.cpp.o: CXX_COMPILER__Digit_RBKD_unscann
 #############################################
 # Link the executable Digit_RBKD
 
-build Digit_RBKD: CXX_EXECUTABLE_LINKER__Digit_RBKD_Debug CMakeFiles/Digit_RBKD.dir/src/main.cpp.o
+build Digit_RBKD: CXX_EXECUTABLE_LINKER__Digit_RBKD_Debug CMakeFiles/Digit_RBKD.dir/src/main.cpp.o CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o
   FLAGS = -g
   LINK_FLAGS = -rdynamic
   OBJECT_DIR = CMakeFiles/Digit_RBKD.dir

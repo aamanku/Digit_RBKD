@@ -4,6 +4,7 @@
 #include <eigen3/Eigen/Dense>
 
 #define DEBUG 1
+#define MYINF 1e10
 
 typedef double myfloat;
 typedef int myint;

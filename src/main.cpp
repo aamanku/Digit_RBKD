@@ -1,10 +1,9 @@
 #include <iostream>
-#include "rigid_body.hxx"
-#include "rbda/rbda.hxx"
+#include "digit_model.hxx"
 
 
 int main(int, char**){
-    
-    RigidBody body1("body1", 1.0, Vector3(0.0, 0.0, 0.0), Matrix3::Identity(), JointType::FIXED, -1, Vector3(0.0, 0.0, 0.0));
+    std::cout << "Hello, world!" << std::endl;
+    DigitModel digit = DigitModel();
     return 0;
 }

@@ -8,7 +8,7 @@ enable_testing()
 
 include_directories(${EIGEN3_INCLUDE_DIR} include)
 
-add_executable(Digit_RBKD src/main.cpp)
+add_executable(Digit_RBKD src/main.cpp src/tinyxml2.cpp)
 target_link_libraries(Digit_RBKD Eigen3::Eigen)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
