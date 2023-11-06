@@ -81,27 +81,27 @@ inline Eigen::Matrix<myfloat,3,1> Etov(Eigen::Matrix<myfloat,3,3> E) {
 }
 
 
-/**
- * @brief Etoq(E) converts a 3x3 coordinate rotation matrix E to a 4x1 quaternion q.
- * 
- * @param E 3x3 coordinate rotation matrix
- * @return Eigen::Matrix<myfloat,4,1> q 4x1 quaternion
- */
-inline Eigen::Matrix<myfloat,4,1> Etoq(Eigen::Matrix<myfloat,3,3> E){
-    Eigen::Quaternion<myfloat> q(E);
-    return Eigen::Matrix<myfloat,4,1>(q.w(), q.x(), q.y(), q.z());
-}
+// /**
+//  * @brief Etoq(E) converts a 3x3 coordinate rotation matrix E to a 4x1 quaternion q.
+//  * 
+//  * @param E 3x3 coordinate rotation matrix
+//  * @return Eigen::Matrix<myfloat,4,1> q 4x1 quaternion
+//  */
+// inline Eigen::Matrix<myfloat,4,1> Etoq(Eigen::Matrix<myfloat,3,3> E){
+//     Eigen::Quaternion<myfloat> q(E);
+//     return Eigen::Matrix<myfloat,4,1>(q.w(), q.x(), q.y(), q.z());
+// }
 
-/**
- * @brief qtoE(q) converts a 4x1 quaternion q to a 3x3 coordinate rotation matrix E.
- * 
- * @param q 4x1 quaternion
- * @return Eigen::Matrix<myfloat,3,3> E 3x3 coordinate rotation matrix
- */
-inline Eigen::Matrix<myfloat,3,3> qtoE(Eigen::Matrix<myfloat,4,1> q){
-    Eigen::Quaternion<myfloat> quat(q(0), q(1), q(2), q(3));
-    return quat.toRotationMatrix();
-}
+// /**
+//  * @brief qtoE(q) converts a 4x1 quaternion q to a 3x3 coordinate rotation matrix E.
+//  * 
+//  * @param q 4x1 quaternion
+//  * @return Eigen::Matrix<myfloat,3,3> E 3x3 coordinate rotation matrix
+//  */
+// inline Eigen::Matrix<myfloat,3,3> qtoE(Eigen::Matrix<myfloat,4,1> q){
+//     Eigen::Quaternion<myfloat> quat(q(0), q(1), q(2), q(3));
+//     return quat.toRotationMatrix();
+// }
 
 /**
  * @brief skew  convert 3D vector <--> 3x3 skew-symmetric matrix
