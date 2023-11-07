@@ -9,7 +9,111 @@
 namespace rbda
 {
 
+struct Pose {
+        Eigen::Matrix<myfloat,3,3> R;
+        Eigen::Matrix<myfloat,3,1> p;
 
+        // constructors
+        Pose() : R(Eigen::Matrix<myfloat,3,3>::Identity()), p(Eigen::Matrix<myfloat,3,1>::Zero()){};
+        Pose(Eigen::Matrix<myfloat,3,3> R, Eigen::Matrix<myfloat,3,1> p) : R(R), p(p){};
+        Pose(Eigen::Matrix<myfloat,3,1> euler_deg, Eigen::Matrix<myfloat,3,1> p) {
+            Eigen::AngleAxis<myfloat> aa(euler_deg(0)*M_PI/180.0, Eigen::Matrix<myfloat,3,1>::UnitX());
+            Eigen::AngleAxis<myfloat> ab(euler_deg(1)*M_PI/180.0, Eigen::Matrix<myfloat,3,1>::UnitY());
+            Eigen::AngleAxis<myfloat> ac(euler_deg(2)*M_PI/180.0, Eigen::Matrix<myfloat,3,1>::UnitZ());
+            
+            this->R = (aa.matrix()*ab.matrix()*ac.matrix());
+            this->p = p;
+        }
+
+        // set to identity
+        void setIdentity()
+        {
+                R = Eigen::Matrix<myfloat,3,3>::Identity();
+                p = Eigen::Matrix<myfloat,3,1>::Zero();
+        };
+
+
+        // operators <<
+        friend std::ostream &operator<<(std::ostream &os, const Pose &pose)
+        {
+                os << "R: " << std::endl;
+                os << pose.R << std::endl;
+                os << "p: " << std::endl;
+                os << pose.p << std::endl;
+                return os;
+        }
+};
+
+struct MotionVector {
+    Eigen::Matrix<myfloat,3,1> omega;
+    Eigen::Matrix<myfloat,3,1> v;
+
+    // constructors
+    MotionVector() : omega(Eigen::Matrix<myfloat,3,1>::Zero()), v(Eigen::Matrix<myfloat,3,1>::Zero()){};
+    MotionVector(Eigen::Matrix<myfloat,3,1> omega, Eigen::Matrix<myfloat,3,1> v) : omega(omega), v(v){};
+    MotionVector(Eigen::Matrix<myfloat,6,1> mv) : omega(mv.block<3,1>(0,0)), v(mv.block<3,1>(3,0)){};
+
+    Eigen::Matrix<myfloat,6,1> toVector() const {
+        Eigen::Matrix<myfloat,6,1> mv;
+        mv << this->omega, this->v;
+        return mv;
+    }
+
+    // operators <<
+    friend std::ostream &operator<<(std::ostream &os, const MotionVector &mv)
+    {
+        os << "omega: " << mv.omega.transpose() << std::endl;
+        os << "v: " << mv.v.transpose() << std::endl;
+        return os;
+    }
+    // operators +
+    friend MotionVector operator+(const MotionVector &lhs, const MotionVector &rhs)
+    {
+        MotionVector mv;
+        mv.omega = lhs.omega + rhs.omega;
+        mv.v = lhs.v + rhs.v;
+        return mv;
+    }
+    // operators -
+    friend MotionVector operator-(const MotionVector &lhs, const MotionVector &rhs)
+    {
+        MotionVector mv;
+        mv.omega = lhs.omega - rhs.omega;
+        mv.v = lhs.v - rhs.v;
+        return mv;
+    }
+    // operators *
+    friend MotionVector operator*(const myfloat &lhs, const MotionVector &rhs)
+    {
+        MotionVector mv;
+        mv.omega = lhs*rhs.omega;
+        mv.v = lhs*rhs.v;
+        return mv;
+    }
+    // operators *
+    friend MotionVector operator*(const MotionVector &lhs, const myfloat &rhs)
+    {
+        MotionVector mv;
+        mv.omega = lhs.omega*rhs;
+        mv.v = lhs.v*rhs;
+        return mv;
+    }
+    // operators =
+    MotionVector &operator=(const MotionVector &rhs)
+    {
+        this->omega = rhs.omega;
+        this->v = rhs.v;
+        return *this;
+    }
+    
+    MotionVector cross(const MotionVector &rhs) const {
+        MotionVector mv;
+        mv.omega = this->omega.cross(rhs.omega);
+        mv.v = this->omega.cross(rhs.v) + this->v.cross(rhs.omega);
+        return mv;
+    }
+
+};
 
 
 struct PluckerTransform
@@ -35,13 +139,18 @@ struct PluckerTransform
         this->r = p;
     };
 
+    PluckerTransform(Pose pose) {
+        this->E = pose.R.transpose(); // coordinate transform matrix from A to B coordinates
+        this->r = pose.p;
+    }
+
     PluckerTransform(Eigen::Matrix<myfloat,3,3> E, Eigen::Matrix<myfloat,3,1> r) : E(E), r(r){};
 
     // inverse
     PluckerTransform inverse() const {
         PluckerTransform Xinv;
         Xinv.E = this->E.transpose();
-        Xinv.r = -this->E.transpose()*this->r;
+        Xinv.r = -this->E*this->r;
         return Xinv;
     }
 
@@ -54,6 +163,17 @@ struct PluckerTransform
         return X;
     }
 
+    Pose toPose() const {
+        Pose pose;
+        pose.R = this->E.transpose();
+        pose.p = this->r;
+        return pose;
+    }
+
+    void setIdentity() {
+        this->E = Eigen::Matrix<myfloat,3,3>::Identity();
+        this->r = Eigen::Matrix<myfloat,3,1>::Zero();
+    }
 
     // operators *
     friend PluckerTransform operator*(const PluckerTransform &lhs, const PluckerTransform &rhs)
@@ -85,6 +205,14 @@ struct PluckerTransform
         return os;
     }
 
+    // operator * (motion vector)
+    friend MotionVector operator*(const PluckerTransform &lhs, const MotionVector &rhs)
+    {
+        MotionVector mv;
+        mv.omega = lhs.E*rhs.omega;
+        mv.v = lhs.E*(rhs.v - lhs.r.cross(rhs.omega));
+        return mv;
+    }
 
 };
 
@@ -139,6 +267,9 @@ struct SpatialInertia
         return os;
     }
 };
+
+
+
 
 }; // namespace rbda
 
