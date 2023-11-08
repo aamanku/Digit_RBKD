@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/abhijee/Documents/GitHub/Digit_RBKD/build",
-  "command": "/usr/bin/g++ -I/home/abhijee/Documents/GitHub/Digit_RBKD/include -isystem /usr/include/eigen3 -O3 -DNDEBUG -o CMakeFiles/Digit_RBKD.dir/src/main.cpp.o -c /home/abhijee/Documents/GitHub/Digit_RBKD/src/main.cpp",
-  "file": "/home/abhijee/Documents/GitHub/Digit_RBKD/src/main.cpp",
-  "output": "CMakeFiles/Digit_RBKD.dir/src/main.cpp.o"
-}
-]
