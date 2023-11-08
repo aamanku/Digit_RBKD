@@ -378,6 +378,14 @@ public:
 
         }
 
+        myfloat total_mass() {
+                myfloat mass = 0.0;
+                for (myint i = 0; i < num_bodies; i++) {
+                        mass += bodies.at(i).spI.m;
+                }
+                return mass;
+        }
+
         Eigen::Matrix<myfloat,3,1> com_position() {
                 
                 // calculate composite inertia
@@ -397,7 +405,33 @@ public:
                 return Itot.com_pos();
         }
 
-        
+        Eigen::Matrix<myfloat,6,-1> centroidal_momentum_matrix(Eigen::Matrix<myfloat,-1,-1> H = Eigen::Matrix<myfloat,-1,-1>()) {
+
+                // Using wensing's method https://www.cs.cmu.edu/~cga/z/Wensing_IJHR_2016.pdf
+                H = (H.rows()==0)?this->joint_space_inertia_matrix():H;
+
+                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+                PluckerTransform oXG;
+                oXG.E = Eigen::Matrix<myfloat,3,3>::Identity();
+                oXG.r = - SpatialInertia(psi.transpose()*H.block<6,6>(0,0)*psi).com_pos(); // to directly get Itot
+
+                return oXG.toMatrix().transpose()*psi.transpose()*H.block(0,0,6,H.cols());
+        }
+
+        Eigen::Matrix<myfloat,6,1> centroidal_momentum_corriolis(Eigen::Matrix<myfloat,-1,1> C_terms = Eigen::Matrix<myfloat,-1,1>()) {
+                
+                // Using wensing's method https://www.cs.cmu.edu/~cga/z/Wensing_IJHR_2016.pdf
+                C_terms = (C_terms.rows()==0)?this->joint_space_nonlinear_effects(false):C_terms;
+
+                PluckerTransform oXG;
+                oXG.E = Eigen::Matrix<myfloat,3,3>::Identity();
+                oXG.r = - this->com_position();
+                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+                
+                return oXG.toMatrix().transpose()*psi.transpose()*C_terms.block<6,1>(0,0);
+        }
+
+
 
 };
 

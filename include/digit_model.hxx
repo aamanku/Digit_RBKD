@@ -989,16 +989,17 @@ class DigitModel: public RigidBodyTree
 
         // std::cout<< this->joint_space_inertia_matrix()<<std::endl;
         std::cout<< this->com_position() << std::endl;
+        std::cout<<this->centroidal_momentum_corriolis();
         // time inertia matrix in microseconds
         auto start = std::chrono::high_resolution_clock::now();
         for (int i = 0; i < 1000; i++) {
             // this->joint_space_inertia_matrix();
             // this->joint_space_nonlinear_effects();
-            this->com_position();
+            this->centroidal_momentum_corriolis();
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()/1000.0<<std::endl;
-        // this->print_state();
+        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000.0<<std::endl;
+        this->print_state();
 
     }
 
