@@ -2,7 +2,6 @@
 #define DIGIT_MODEL_HXX
 
 #include "rigid_body.hxx"
-// #include "tinyxml2.h"
 #include <chrono>
 
 using namespace rbda;
@@ -954,26 +953,27 @@ class DigitModel: public RigidBodyTree
         std::cout<<"FwdKinematics"<<std::endl;
         bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(10,0,100));
         bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
-        // bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
-        // bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
+        bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
+        bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
         // bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
-        std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
+        // std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
 
-        std::cout<<"Body Jacobian"<<std::endl;
-        std::cout<<this->spatial_body_jacobian(right_hip_yaw_id)<<std::endl;
+        // std::cout<<"Body Jacobian"<<std::endl;
+        // std::cout<<this->spatial_body_jacobian(right_hip_yaw_id)<<std::endl;
         
-        std::cout<<this->spatial_body_corriolis(left_toe_pitch_id)<<std::endl;
+        // std::cout<<this->spatial_body_corriolis(left_toe_pitch_id)<<std::endl;
 
 
-        std::cout<< this->joint_space_inertia_matrix()<<std::endl;
-
+        // std::cout<< this->joint_space_inertia_matrix()<<std::endl;
+        std::cout<< this->joint_space_nonlinear_effects(true)<<std::endl;
         // time inertia matrix in microseconds
         auto start = std::chrono::high_resolution_clock::now();
-        for (int i = 0; i < 100; i++) {
-            this->joint_space_inertia_matrix();
+        for (int i = 0; i < 1000; i++) {
+            // this->joint_space_inertia_matrix();
+            this->joint_space_nonlinear_effects();
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()/100.0<<std::endl;
+        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()/1000.0<<std::endl;
         // this->print_state();
 
     }

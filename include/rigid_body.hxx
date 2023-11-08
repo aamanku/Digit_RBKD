@@ -263,11 +263,17 @@ public:
                 return Xframe.toPose();
         }
 
-        Eigen::Matrix<myfloat,36,36> joint_space_inertia_matrix() //size is constant for digit
+        Eigen::Matrix<myfloat,-1,-1> joint_space_inertia_matrix()
         {
-                assert(num_v == 36); // size is constant for digit
-                Eigen::Matrix<myfloat,36,36> H;
+                Eigen::Matrix<myfloat,-1,-1> H;
+                std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
+                for (myint i = 0; i < num_bodies; i++) {
+                        dof.push_back(bodies.at(i).joint.v.size());
+                        csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
+                }
+                H.resize(csdof.back(),csdof.back());
                 H.setZero();
+
                 // composite inertia calculation
                 std::vector<SpatialInertia> Ic;
                 Ic.resize(num_bodies);
@@ -279,14 +285,10 @@ public:
                                 Ic.at(parent) = Ic.at(parent) + Ic.at(i).invApply(bodies.at(i).Xjtree);
                         }
                 }
+
                 // joint space inertia calculation
                 Eigen::Matrix<myfloat,6,-1> F,S;
                 myint j=0;
-                std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
-                for (myint i = 0; i < num_bodies; i++) {
-                        dof.push_back(bodies.at(i).joint.v.size());
-                        csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
-                }
                 
                 for (myint i = 0; i < num_bodies; i++) {
                         parent = bodies.at(i).parent;
@@ -309,6 +311,49 @@ public:
                 }
                 
                 return H;
+        }
+
+        Eigen::Matrix<myfloat,-1,1> joint_space_nonlinear_effects(bool include_gravity = true) { 
+                Eigen::Matrix<myfloat,-1,1> C;
+                std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
+                for (myint i = 0; i < num_bodies; i++) {
+                        dof.push_back(bodies.at(i).joint.v.size());
+                        csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
+                }
+                C.resize(csdof.back(),1);
+                C.setZero();
+
+                // need to create vector of v and avp. Because the value of parent body is needed to calculate the value of child body. But child and parent may not be calculated in order.
+                std::vector<MotionVector> avp;
+                std::vector<MotionVector> v;
+                std::vector<ForceVector> fvp;
+                MotionVector vJ;
+                avp.resize(num_bodies);
+                v.resize(num_bodies);
+                fvp.resize(num_bodies);
+
+                avp.at(0) = MotionVector(Eigen::Vector<myfloat,3>::Zero(),-gravity*((include_gravity)?1.0:0.0));
+                v.at(0) = MotionVector(Eigen::Matrix<myfloat,6,1>(motion_subspace_matrix(bodies[0].joint.joint_type, bodies[0].joint.joint_axis)*bodies[0].joint.v)); // TODO: find a better way to do this;
+                fvp.at(0) = ForceVector(Eigen::Vector<myfloat,3>::Zero(),Eigen::Vector<myfloat,3>::Zero());
+                
+
+                //go down the tree
+                for(myint i=1; i < num_bodies; i++) {
+                        vJ = MotionVector(Eigen::Matrix<myfloat,6,1>(motion_subspace_matrix(bodies[i].joint.joint_type, bodies[i].joint.joint_axis)*bodies[i].joint.v)); // TODO: find a better way to do this;
+                        v.at(i) = bodies[i].Xjtree*v.at(bodies[i].parent) + vJ;
+                        avp.at(i) = bodies[i].Xjtree*avp.at(bodies[i].parent) + v.at(i).cross(vJ);
+                        fvp.at(i) = bodies[i].spI*avp.at(i) + v.at(i).cross(bodies[i].spI*v.at(i));
+                }
+
+                // go up the tree
+                for(myint i=num_bodies-1; i >=0; i--) {
+                        C.block(csdof[i]-dof[i],0,dof[i],1) = motion_subspace_matrix(bodies[i].joint.joint_type, bodies[i].joint.joint_axis).transpose()*fvp.at(i).toVector();
+                        if (bodies[i].parent != -1) {
+                                fvp.at(bodies[i].parent) = fvp.at(bodies[i].parent) + bodies[i].Xjtree.invApply(fvp.at(i));
+                        }
+                }
+                return C;
+
         }
 
 };

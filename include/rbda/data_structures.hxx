@@ -43,6 +43,76 @@ struct Pose {
                 return os;
         }
 };
+struct ForceVector {
+    Eigen::Matrix<myfloat,3,1> n;
+    Eigen::Matrix<myfloat,3,1> f;
+
+    // constructors
+    ForceVector() : n(Eigen::Matrix<myfloat,3,1>::Zero()), f(Eigen::Matrix<myfloat,3,1>::Zero()){};
+    ForceVector(Eigen::Matrix<myfloat,3,1> n, Eigen::Matrix<myfloat,3,1> f) : n(n), f(f){};
+    ForceVector(Eigen::Matrix<myfloat,6,1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
+    ForceVector(Eigen::Matrix<myfloat,6,-1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
+
+    Eigen::Matrix<myfloat,6,1> toVector() const {
+        Eigen::Matrix<myfloat,6,1> fv;
+        fv << this->n, this->f;
+        return fv;
+    }
+
+    // operators <<
+    friend std::ostream &operator<<(std::ostream &os, const ForceVector &fv)
+    {
+        os << "n: " << fv.n.transpose() << std::endl;
+        os << "f: " << fv.f.transpose() << std::endl;
+        return os;
+    }
+
+    // operators +
+    friend ForceVector operator+(const ForceVector &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n + rhs.n;
+        fv.f = lhs.f + rhs.f;
+        return fv;
+    }
+
+    // operators -
+    friend ForceVector operator-(const ForceVector &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n - rhs.n;
+        fv.f = lhs.f - rhs.f;
+        return fv;
+    }
+
+    // operators *
+    friend ForceVector operator*(const myfloat &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs*rhs.n;
+        fv.f = lhs*rhs.f;
+        return fv;
+    }
+
+    // operators *
+    friend ForceVector operator*(const ForceVector &lhs, const myfloat &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n*rhs;
+        fv.f = lhs.f*rhs;
+        return fv;
+    }
+
+    // operators =
+    ForceVector &operator=(const ForceVector &rhs)
+    {
+        this->n = rhs.n;
+        this->f = rhs.f;
+        return *this;
+    }
+
+    
+};
 
 struct MotionVector {
     Eigen::Matrix<myfloat,3,1> omega;
@@ -114,78 +184,16 @@ struct MotionVector {
         return mv;
     }
 
+    ForceVector cross(const ForceVector &rhs) const {
+        ForceVector fv;
+        fv.n = this->omega.cross(rhs.n) + this->v.cross(rhs.f);
+        fv.f = this->omega.cross(rhs.f);
+        return fv;
+    }
+
 };
 
-struct ForceVector {
-    Eigen::Matrix<myfloat,3,1> n;
-    Eigen::Matrix<myfloat,3,1> f;
 
-    // constructors
-    ForceVector() : n(Eigen::Matrix<myfloat,3,1>::Zero()), f(Eigen::Matrix<myfloat,3,1>::Zero()){};
-    ForceVector(Eigen::Matrix<myfloat,3,1> n, Eigen::Matrix<myfloat,3,1> f) : n(n), f(f){};
-    ForceVector(Eigen::Matrix<myfloat,6,1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
-    ForceVector(Eigen::Matrix<myfloat,6,-1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
-
-    Eigen::Matrix<myfloat,6,1> toVector() const {
-        Eigen::Matrix<myfloat,6,1> fv;
-        fv << this->n, this->f;
-        return fv;
-    }
-
-    // operators <<
-    friend std::ostream &operator<<(std::ostream &os, const ForceVector &fv)
-    {
-        os << "n: " << fv.n.transpose() << std::endl;
-        os << "f: " << fv.f.transpose() << std::endl;
-        return os;
-    }
-
-    // operators +
-    friend ForceVector operator+(const ForceVector &lhs, const ForceVector &rhs)
-    {
-        ForceVector fv;
-        fv.n = lhs.n + rhs.n;
-        fv.f = lhs.f + rhs.f;
-        return fv;
-    }
-
-    // operators -
-    friend ForceVector operator-(const ForceVector &lhs, const ForceVector &rhs)
-    {
-        ForceVector fv;
-        fv.n = lhs.n - rhs.n;
-        fv.f = lhs.f - rhs.f;
-        return fv;
-    }
-
-    // operators *
-    friend ForceVector operator*(const myfloat &lhs, const ForceVector &rhs)
-    {
-        ForceVector fv;
-        fv.n = lhs*rhs.n;
-        fv.f = lhs*rhs.f;
-        return fv;
-    }
-
-    // operators *
-    friend ForceVector operator*(const ForceVector &lhs, const myfloat &rhs)
-    {
-        ForceVector fv;
-        fv.n = lhs.n*rhs;
-        fv.f = lhs.f*rhs;
-        return fv;
-    }
-
-    // operators =
-    ForceVector &operator=(const ForceVector &rhs)
-    {
-        this->n = rhs.n;
-        this->f = rhs.f;
-        return *this;
-    }
-
-    
-};
 
 
 struct PluckerTransform
@@ -286,6 +294,13 @@ struct PluckerTransform
         return mv;
     }
 
+    ForceVector invApply(const ForceVector &rhs) const {
+        ForceVector fv;
+        fv.n = this->E.transpose()*rhs.n + this->r.cross(this->E.transpose()*rhs.f);
+        fv.f = this->E.transpose()*rhs.f;
+        return fv;
+    }
+
 };
 
 struct SpatialInertia
@@ -347,6 +362,15 @@ struct SpatialInertia
         spI.h = lhs.h - rhs.h;
         spI.I = lhs.I - rhs.I;
         return spI;
+    }
+
+    // operators *
+    friend ForceVector operator*(const SpatialInertia &lhs, const MotionVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.I*rhs.omega + lhs.h.cross(rhs.v);
+        fv.f = lhs.m*rhs.v - lhs.h.cross(rhs.omega);
+        return fv;
     }
 
     SpatialInertia apply(PluckerTransform X) const {
