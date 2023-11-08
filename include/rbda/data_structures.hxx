@@ -414,6 +414,14 @@ struct SpatialInertia
         return spI;
     }
 
+    Eigen::Matrix<myfloat,3,1> com_pos() const {
+        return this->h/this->m;
+    }
+
+    Eigen::Matrix<myfloat,3,3> com_inertia() const {
+        return this->I + this->m*skew(this->h/this->m)*skew(this->h/this->m);
+    }
+
     // operators <<
     friend std::ostream &operator<<(std::ostream &os, const SpatialInertia &spI)
     {

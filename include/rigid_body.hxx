@@ -378,6 +378,27 @@ public:
 
         }
 
+        Eigen::Matrix<myfloat,3,1> com_position() {
+                
+                // calculate composite inertia
+                std::vector<SpatialInertia> Ic;
+                SpatialInertia Itot;
+                Ic.resize(num_bodies);
+                myint parent;
+                for (myint i = 0; i < num_bodies; i++) {Ic.at(i) = bodies.at(i).spI;}
+                for (myint i = num_bodies-1; i >=0 ; i--) {
+                        parent = bodies.at(i).parent;
+                        if (parent != -1) {
+                                Ic.at(parent) = Ic.at(parent) + Ic.at(i).invApply(bodies.at(i).Xjtree);
+                        } else {
+                                Itot = Ic.at(i).invApply(bodies.at(i).Xjtree);
+                        }
+                }
+                return Itot.com_pos();
+        }
+
+        
+
 };
 
 #endif // RIGID_BODY_HPP        

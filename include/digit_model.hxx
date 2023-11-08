@@ -974,7 +974,7 @@ class DigitModel: public RigidBodyTree
         std::cout<<"num_u: "<<num_u<<std::endl;
         
         std::cout<<"FwdKinematics"<<std::endl;
-        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(10,0,100));
+        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
         bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
         bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
         bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
@@ -988,12 +988,13 @@ class DigitModel: public RigidBodyTree
 
 
         // std::cout<< this->joint_space_inertia_matrix()<<std::endl;
-        std::cout<< this->joint_space_nonlinear_effects(true)<<std::endl;
+        std::cout<< this->com_position() << std::endl;
         // time inertia matrix in microseconds
         auto start = std::chrono::high_resolution_clock::now();
         for (int i = 0; i < 1000; i++) {
             // this->joint_space_inertia_matrix();
-            this->joint_space_nonlinear_effects();
+            // this->joint_space_nonlinear_effects();
+            this->com_position();
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()/1000.0<<std::endl;
