@@ -90,8 +90,6 @@ struct RigidBody
                 case JointType::SPHERICAL:
                 {
                         const Eigen::Matrix<myfloat, 3, 3> Ej = Eigen::Quaternion<myfloat>(-joint.q(0), joint.q(1), joint.q(2), joint.q(3)).toRotationMatrix(); // last 4 q are quaternion [w,x,y,z] - q(0) for transposed rotation
-                        std::cout<<"Ej: "<<std::endl<<Ej<<std::endl;
-                        std::cin.get();
                         this->Xjtree.E = Ej * this->Xtree.E;
                         this->Xjtree.r = this->Xtree.r;
                         break;
@@ -166,14 +164,7 @@ public:
                 }
                 // reverse the vector
                 std::reverse(kappa.begin(), kappa.end());
-                // print kappa
-                std::cout << "kappa: ";
-                for (myint i = 0; i < kappa.size(); i++)
-                {
-                        std::cout << kappa.at(i) << " ";
-                }
-                std::cin.get();
-                // return the pose
+                // return the kappa
                 return kappa;
         }
 
@@ -199,26 +190,21 @@ public:
                                         break;
                         }
                 }
-                std::cout << "branch_dof: ";
-                for (myint i = 0; i < branch_dof.size(); i++)
-                {
-                        std::cout << branch_dof.at(i) << " ";
-                }
                 return branch_dof;
         }
 
 
         PluckerTransform spatial_body_forward_kinematics(myint body_id, myint parent_body_id = -1)
         {
-                PluckerTransform Xup = bodies[body_id].Xjtree;
+                PluckerTransform iXl = bodies[body_id].Xjtree;
                 // go up the tree
                 while (bodies[body_id].parent != parent_body_id)
                 {
                         body_id = bodies[body_id].parent;
-                        Xup = Xup * bodies[body_id].Xjtree;
+                        iXl = iXl * bodies[body_id].Xjtree;
                 }
                 // return the pose
-                return Xup;
+                return iXl;
         }
 
         Eigen::Matrix<myfloat, 6, -1> spatial_body_jacobian(myint body_id, myint parent_body_id = -1)
@@ -227,40 +213,46 @@ public:
                 std::vector<myint> branch = this->kappa(body_id, parent_body_id);
                 std::vector<myint> branch_dof = this->branch_dof(branch);
                 myint dof = std::accumulate(branch_dof.begin(), branch_dof.end(), 0);
-                std::cout<<"dof: "<<dof<<std::endl;
                 // resize the jacobian
                 Jb.resize(6, dof);
-
-                myint id = branch.at(0);
-                myint num_col = 0;
-                PluckerTransform iXo = bodies[id].Xjtree;
-                Eigen::Matrix<myfloat,6,-1> Sj = motion_subspace_matrix(bodies[id].joint.joint_type, bodies[id].joint.joint_axis);
-                Jb.block(0,num_col,6,Sj.cols()) << (iXo.inverse().toMatrix()*Sj);
-                num_col += Sj.cols();
-
+                myint id, num_col=0;
+                PluckerTransform iXo;
+                Eigen::Matrix<myfloat,6,-1> Sj;
                 // go down the tree
-                for (myint i = 1 ; i < branch.size(); i++)
+                for (myint i = 0 ; i < branch.size(); i++)
                 {
-                        std::cout<<"body_name: "<<bodies[branch.at(i-1)].name<<std::endl;
-                        std::cout<<"iXo: "<<std::endl<<iXo.toMatrix()<<std::endl;
-                        std::cout<<"iXo_inv: "<<std::endl<<iXo.inverse().toMatrix()<<std::endl;
-                        std::cout<<"Sj: "<<std::endl<<Sj<<std::endl;
-                        std::cin.get();
                         id = branch.at(i);
-                        iXo = bodies[id].Xjtree*iXo;
-                        Sj = motion_subspace_matrix(bodies[id].joint.joint_type, bodies[id].joint.joint_axis);
+                        iXo = (i==0)?bodies[id].Xjtree: bodies[id].Xjtree*iXo;
+                        Sj = motion_subspace_matrix(bodies[id].joint.joint_type, bodies[id].joint.joint_axis); //TODO: change to direct block extraction
                         Jb.block(0,num_col,6,Sj.cols()) << iXo.inverse().toMatrix()*Sj;
                         num_col += Sj.cols();
-
                 }      
-                std::cout<<"body_name: "<<bodies[branch.at(branch.size()-1)].name<<std::endl;
-                        std::cout<<"iXo: "<<std::endl<<iXo.toMatrix()<<std::endl;
-                        std::cout<<"iXo_inv: "<<std::endl<<iXo.inverse().toMatrix()<<std::endl;
-                        std::cout<<"Sj: "<<std::endl<<Sj<<std::endl;
-                        std::cin.get();          
-
                 // return the jacobian 
                 return Jb;
+        }
+
+        MotionVector spatial_body_corriolis(myint body_id, myint parent_body_id = -1) {
+                PluckerTransform oXi,lXi,iXl;
+                MotionVector vJ;
+                MotionVector ovi;
+                MotionVector lvi;
+                MotionVector a;
+
+                std::vector<myint> branch = this->kappa(body_id, parent_body_id);
+
+                // go down the tree
+                for (myint i = 0 ; i < branch.size(); i++)
+                {
+                        myint id = branch.at(i);
+                        iXl = bodies[id].Xjtree;
+                        lXi = bodies[id].Xjtree.inverse();
+                        oXi = (i==0)?lXi : oXi*lXi;
+                        vJ = MotionVector(Eigen::Matrix<myfloat,6,1>(motion_subspace_matrix(bodies[id].joint.joint_type, bodies[id].joint.joint_axis)*bodies[id].joint.v)); // TODO: find a better way to do this
+                        ovi = (i==0)?oXi*vJ : ovi + oXi*vJ;
+                        lvi = (i==0)?vJ : iXl*lvi + vJ; 
+                        a = (i==0)?MotionVector() : iXl*a + lvi.cross(vJ);
+                }
+                return oXi*a;
         }
 
         Pose forward_kinematics(Pose frame, myint body_id, myint parent_body_id = -1)
@@ -271,7 +263,54 @@ public:
                 return Xframe.toPose();
         }
 
-        // methods
+        Eigen::Matrix<myfloat,36,36> joint_space_inertia_matrix() //size is constant for digit
+        {
+                assert(num_v == 36); // size is constant for digit
+                Eigen::Matrix<myfloat,36,36> H;
+                H.setZero();
+                // composite inertia calculation
+                std::vector<SpatialInertia> Ic;
+                Ic.resize(num_bodies);
+                myint parent;
+                for (myint i = 0; i < num_bodies; i++) {Ic.at(i) = bodies.at(i).spI;}
+                for (myint i = num_bodies-1; i >=0 ; i--) {
+                        parent = bodies.at(i).parent;
+                        if (parent != -1) {
+                                Ic.at(parent) = Ic.at(parent) + Ic.at(i).invApply(bodies.at(i).Xjtree);
+                        }
+                }
+                // joint space inertia calculation
+                Eigen::Matrix<myfloat,6,-1> F,S;
+                myint j=0;
+                std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
+                for (myint i = 0; i < num_bodies; i++) {
+                        dof.push_back(bodies.at(i).joint.v.size());
+                        csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
+                }
+                
+                for (myint i = 0; i < num_bodies; i++) {
+                        parent = bodies.at(i).parent;
+                        S = motion_subspace_matrix(bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
+                        F = Ic.at(i).toMatrix() * S;
+
+                        H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = S.transpose() * F;
+                        j = i;
+                        while (bodies.at(j).parent != -1) {
+                                F = bodies.at(j).Xjtree.toMatrix().transpose() * F;
+                                j = bodies.at(j).parent;
+                                H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = F.transpose() * motion_subspace_matrix(bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
+                                H.block(csdof[j]-dof[j],csdof[i]-dof[i],dof[j],dof[i]) = H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]).transpose();
+                        }
+                }
+
+                // add armature
+                for (myint i = 0; i < num_bodies; i++) {
+                        H(csdof[i]-dof[i],csdof[i]-dof[i]) += bodies.at(i).joint.armature;
+                }
+                
+                return H;
+        }
+
 };
 
-#endif // RIGID_BODY_HPP
+#endif // RIGID_BODY_HPP        

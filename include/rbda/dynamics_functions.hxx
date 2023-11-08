@@ -48,5 +48,15 @@ namespace rbda
         return S;
     }
 
+
+
+    // inline Eigen::Matrix<myfloat,6,-1> extract_subspace_motion(Eigen::Matrix<myfloat,6,-1>& J, JointType joint_type, Eigen::Matrix<myfloat,3,1> joint_axis = Eigen::Matrix<myfloat,3,1>::UnitZ()) {
+    //     switch (joint_type)
+    //     {
+
+    //     }
+    // }
+
+
 };
 #endif // DYNAMICS_FUNCTIONS_HXX

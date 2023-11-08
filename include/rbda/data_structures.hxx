@@ -52,6 +52,7 @@ struct MotionVector {
     MotionVector() : omega(Eigen::Matrix<myfloat,3,1>::Zero()), v(Eigen::Matrix<myfloat,3,1>::Zero()){};
     MotionVector(Eigen::Matrix<myfloat,3,1> omega, Eigen::Matrix<myfloat,3,1> v) : omega(omega), v(v){};
     MotionVector(Eigen::Matrix<myfloat,6,1> mv) : omega(mv.block<3,1>(0,0)), v(mv.block<3,1>(3,0)){};
+    MotionVector(Eigen::Matrix<myfloat,6,-1> mv) : omega(mv.block<3,1>(0,0)), v(mv.block<3,1>(3,0)){};
 
     Eigen::Matrix<myfloat,6,1> toVector() const {
         Eigen::Matrix<myfloat,6,1> mv;
@@ -113,6 +114,77 @@ struct MotionVector {
         return mv;
     }
 
+};
+
+struct ForceVector {
+    Eigen::Matrix<myfloat,3,1> n;
+    Eigen::Matrix<myfloat,3,1> f;
+
+    // constructors
+    ForceVector() : n(Eigen::Matrix<myfloat,3,1>::Zero()), f(Eigen::Matrix<myfloat,3,1>::Zero()){};
+    ForceVector(Eigen::Matrix<myfloat,3,1> n, Eigen::Matrix<myfloat,3,1> f) : n(n), f(f){};
+    ForceVector(Eigen::Matrix<myfloat,6,1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
+    ForceVector(Eigen::Matrix<myfloat,6,-1> fv) : n(fv.block<3,1>(0,0)), f(fv.block<3,1>(3,0)){};
+
+    Eigen::Matrix<myfloat,6,1> toVector() const {
+        Eigen::Matrix<myfloat,6,1> fv;
+        fv << this->n, this->f;
+        return fv;
+    }
+
+    // operators <<
+    friend std::ostream &operator<<(std::ostream &os, const ForceVector &fv)
+    {
+        os << "n: " << fv.n.transpose() << std::endl;
+        os << "f: " << fv.f.transpose() << std::endl;
+        return os;
+    }
+
+    // operators +
+    friend ForceVector operator+(const ForceVector &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n + rhs.n;
+        fv.f = lhs.f + rhs.f;
+        return fv;
+    }
+
+    // operators -
+    friend ForceVector operator-(const ForceVector &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n - rhs.n;
+        fv.f = lhs.f - rhs.f;
+        return fv;
+    }
+
+    // operators *
+    friend ForceVector operator*(const myfloat &lhs, const ForceVector &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs*rhs.n;
+        fv.f = lhs*rhs.f;
+        return fv;
+    }
+
+    // operators *
+    friend ForceVector operator*(const ForceVector &lhs, const myfloat &rhs)
+    {
+        ForceVector fv;
+        fv.n = lhs.n*rhs;
+        fv.f = lhs.f*rhs;
+        return fv;
+    }
+
+    // operators =
+    ForceVector &operator=(const ForceVector &rhs)
+    {
+        this->n = rhs.n;
+        this->f = rhs.f;
+        return *this;
+    }
+
+    
 };
 
 
@@ -242,13 +314,57 @@ struct SpatialInertia
         this->I = Ic_full - m*skew(c)*skew(c); // parallel axis theorem
     };
 
-    Eigen::Matrix<myfloat,6,6> mat() const {
+    SpatialInertia(Eigen::Matrix<myfloat,6,6> mat) {
+        this->m = mat(3,3);
+        this->h = unskew(mat.block<3,3>(0,3));
+        this->I = mat.block<3,3>(0,0);
+    };
+
+    Eigen::Matrix<myfloat,6,6> toMatrix() const {
         Eigen::Matrix<myfloat,6,6> mat;
         mat.block<3,3>(0,0) = this->I;
         mat.block<3,3>(0,3) = skew(this->h);
         mat.block<3,3>(3,0) = -skew(this->h);
         mat.block<3,3>(3,3) = this->m*Eigen::Matrix<myfloat,3,3>::Identity();
         return mat;
+    }
+
+    // operators +
+    friend SpatialInertia operator+(const SpatialInertia &lhs, const SpatialInertia &rhs)
+    {
+        SpatialInertia spI;
+        spI.m = lhs.m + rhs.m;
+        spI.h = lhs.h + rhs.h;
+        spI.I = lhs.I + rhs.I;
+        return spI;
+    }
+
+    // operators -
+    friend SpatialInertia operator-(const SpatialInertia &lhs, const SpatialInertia &rhs)
+    {
+        SpatialInertia spI;
+        spI.m = lhs.m - rhs.m;
+        spI.h = lhs.h - rhs.h;
+        spI.I = lhs.I - rhs.I;
+        return spI;
+    }
+
+    SpatialInertia apply(PluckerTransform X) const {
+        SpatialInertia spI;
+        spI.m = this->m;
+        spI.h = X.E*(this->h-this->m*X.r);
+        spI.I = X.E*(this->I + skew(X.r)*skew(this->h) + skew(spI.h)*skew(X.r))*X.E.transpose();
+        return spI;
+        // naive implementation
+        // return SpatialInertia(X.toMatrix().transpose()*this->toMatrix()*X.toMatrix());
+    }
+
+    SpatialInertia invApply(PluckerTransform X) const {
+        SpatialInertia spI;
+        spI.m = this->m;
+        spI.h = X.E.transpose()*this->h + this->m*X.r;
+        spI.I = X.E.transpose()*this->I*X.E - skew(X.r)*skew(X.E.transpose()*this->h)-skew(spI.h)*skew(X.r);
+        return spI;
     }
 
     // operators <<
@@ -262,7 +378,7 @@ struct SpatialInertia
         os << "Ic: " << std::endl;
         os << (spI.I + spI.m*skew(spI.h/spI.m)*skew(spI.h/spI.m)) << std::endl;
         os << "mat: " << std::endl;
-        os << spI.mat() << std::endl;
+        os << spI.toMatrix() << std::endl;
 
         return os;
     }

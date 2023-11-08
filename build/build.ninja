@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: Digit_RBKD
-# Configurations: Debug
+# Configurations: Release
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Debug
+CONFIGURATION = Release
 # =============================================================================
 # Include auxiliary files.
 
@@ -217,16 +217,16 @@ build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
 
 build cmake_object_order_depends_target_Digit_RBKD: phony || CMakeFiles/Digit_RBKD.dir
 
-build CMakeFiles/Digit_RBKD.dir/src/main.cpp.o: CXX_COMPILER__Digit_RBKD_unscanned_Debug /home/abhijee/Documents/GitHub/Digit_RBKD/src/main.cpp || cmake_object_order_depends_target_Digit_RBKD
+build CMakeFiles/Digit_RBKD.dir/src/main.cpp.o: CXX_COMPILER__Digit_RBKD_unscanned_Release /home/abhijee/Documents/GitHub/Digit_RBKD/src/main.cpp || cmake_object_order_depends_target_Digit_RBKD
   DEP_FILE = CMakeFiles/Digit_RBKD.dir/src/main.cpp.o.d
-  FLAGS = -g
+  FLAGS = -O3 -DNDEBUG
   INCLUDES = -I/home/abhijee/Documents/GitHub/Digit_RBKD/include -isystem /usr/include/eigen3
   OBJECT_DIR = CMakeFiles/Digit_RBKD.dir
   OBJECT_FILE_DIR = CMakeFiles/Digit_RBKD.dir/src
 
-build CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o: CXX_COMPILER__Digit_RBKD_unscanned_Debug /home/abhijee/Documents/GitHub/Digit_RBKD/src/tinyxml2.cpp || cmake_object_order_depends_target_Digit_RBKD
+build CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o: CXX_COMPILER__Digit_RBKD_unscanned_Release /home/abhijee/Documents/GitHub/Digit_RBKD/src/tinyxml2.cpp || cmake_object_order_depends_target_Digit_RBKD
   DEP_FILE = CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o.d
-  FLAGS = -g
+  FLAGS = -O3 -DNDEBUG
   INCLUDES = -I/home/abhijee/Documents/GitHub/Digit_RBKD/include -isystem /usr/include/eigen3
   OBJECT_DIR = CMakeFiles/Digit_RBKD.dir
   OBJECT_FILE_DIR = CMakeFiles/Digit_RBKD.dir/src
@@ -239,8 +239,8 @@ build CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o: CXX_COMPILER__Digit_RBKD_uns
 #############################################
 # Link the executable Digit_RBKD
 
-build Digit_RBKD: CXX_EXECUTABLE_LINKER__Digit_RBKD_Debug CMakeFiles/Digit_RBKD.dir/src/main.cpp.o CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o
-  FLAGS = -g
+build Digit_RBKD: CXX_EXECUTABLE_LINKER__Digit_RBKD_Release CMakeFiles/Digit_RBKD.dir/src/main.cpp.o CMakeFiles/Digit_RBKD.dir/src/tinyxml2.cpp.o
+  FLAGS = -O3 -DNDEBUG
   LINK_FLAGS = -rdynamic
   OBJECT_DIR = CMakeFiles/Digit_RBKD.dir
   POST_BUILD = :
