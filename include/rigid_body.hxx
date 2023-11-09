@@ -38,6 +38,7 @@ struct Site
         std::string name;
         myint parent_body;      // index of the parent body
         PluckerTransform Xtree; // transform from parent body to site
+
 };
 
 struct Joint
@@ -229,7 +230,7 @@ public:
                 return iXl;
         }
 
-        Eigen::Matrix<myfloat, 6, -1> spatial_body_jacobian(myint body_id, myint parent_body_id = -1)
+        Eigen::Matrix<myfloat,6,-1> spatial_body_jacobian(myint body_id, myint parent_body_id = -1)
         {
                 Eigen::Matrix<myfloat, 6, -1> Jb;
                 std::vector<myint> branch = this->kappa(body_id, parent_body_id);
@@ -246,11 +247,11 @@ public:
                         id = branch.at(i);
                         iXo = (i==0)?bodies[id].Xjtree: bodies[id].Xjtree*iXo;
                         Sj = motion_subspace_matrix(bodies[id].joint.joint_type, bodies[id].joint.joint_axis); //TODO: change to direct block extraction
-                        Jb.block(0,num_col,6,Sj.cols()) << iXo.inverse().toMatrix()*Sj;
+                        Jb.block(0,num_col,6,Sj.cols()) << iXo.inverse().toMatrix()*Sj; // TODO: change to direct block insertion
                         num_col += Sj.cols();
                 }      
                 // return the jacobian 
-                return Jb;
+                return Jb; 
         }
 
         MotionVector spatial_body_corriolis(myint body_id, myint parent_body_id = -1) {

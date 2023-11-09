@@ -218,7 +218,6 @@ struct MotionVector {
 
 
 
-
 struct PluckerTransform
 {
     // Eigen::Matrix<myfloat, 6, 6> X;
@@ -438,8 +437,6 @@ struct SpatialInertia
         return os;
     }
 };
-
-
 
 
 }; // namespace rbda
