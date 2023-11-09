@@ -23,7 +23,8 @@ SOFTWARE.
 */
 #include <iostream>
 #include "digit_model.hxx"
-
+#include <Eigen/Dense>
+#include <vector>
 
 int main(int, char**){
     std::cout << "Hello, world!" << std::endl;

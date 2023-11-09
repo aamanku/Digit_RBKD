@@ -1,3 +1,13 @@
+```
+ ______     ______     __  __     _____    
+/\  == \   /\  == \   /\ \/ /    /\  __-.  
+\ \  __<   \ \  __<   \ \  _"-.  \ \ \/\ \ 
+ \ \_\ \_\  \ \_____\  \ \_\ \_\  \ \____- 
+  \/_/ /_/   \/_____/   \/_/\/_/   \/____/ 
+  
+```                                        
+
+
 # Digit_RBKD
 Rigid Body Kinematics and Dynamics in c++ for robot Digit from Agility Robotics. 
 
@@ -6,6 +16,6 @@ Why not Pinocchio or RBDL? This way I gain more understanding of the underlying 
 <font color='red'>**This implementation is 5.3 times slower than Pinocchio but has pedagogical value**</font>
 
 
-**Please star if you are using it** :pleading_face:
+**Please star if you are using it** 
 # Work in Progress
 
