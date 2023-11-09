@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(Digit_RBKD VERSION 0.1.0 LANGUAGES C CXX)
+# message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+#optimization flags
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 find_package(Eigen3 REQUIRED)
 

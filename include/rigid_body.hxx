@@ -286,6 +286,11 @@ public:
                 return Xframe.toPose();
         }
 
+        Pose forward_kinematics(Site site, myint parent_body_id = -1)
+        {
+                return forward_kinematics(site.Xtree.toPose(), site.parent_body, parent_body_id);
+        }
+
         Eigen::Matrix<myfloat,-1,-1> joint_space_inertia_matrix()
         {
                 Eigen::Matrix<myfloat,-1,-1> H;

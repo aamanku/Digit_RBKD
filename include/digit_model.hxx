@@ -665,9 +665,31 @@ class DigitModel: public RigidBodyTree
         imu.parent_body = base_rot.id;
         imu.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(0, -90, 0), Eigen::Matrix<myfloat,3,1>(0, 0, 0.0));
 
+        // left foot
+        Site left_foot;
+        left_foot.name = "left-foot";
+        left_foot.parent_body = left_toe_roll.id;
+        left_foot.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-60, 0, -90), Eigen::Matrix<myfloat,3,1>(0.0, -0.05456, -0.0315));
 
+        // right foot
+        Site right_foot;
+        right_foot.name = "right-foot";
+        right_foot.parent_body = right_toe_roll.id;
+        right_foot.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(60, 0, 90), Eigen::Matrix<myfloat,3,1>(0.0, 0.05456, -0.0315));
 
-        sites.push_back(imu);
+        // left hand
+        Site left_hand;
+        left_hand.name = "left-hand";
+        left_hand.parent_body = left_elbow.id;
+        left_hand.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-90, 0, -10), Eigen::Matrix<myfloat,3,1>(0.369, 0.0, -0.07912));
+
+        // right hand
+        Site right_hand;
+        right_hand.name = "right-hand";
+        right_hand.parent_body = right_elbow.id;
+        right_hand.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-90, 0, 10), Eigen::Matrix<myfloat,3,1>(0.369, 0.0, -0.07912));
+
+        
 
         // push all bodies into a vector
         bodies.push_back(base_trans);
@@ -702,6 +724,14 @@ class DigitModel: public RigidBodyTree
         bodies.push_back(right_shoulder_pitch);
         bodies.push_back(right_shoulder_yaw);
         bodies.push_back(right_elbow);
+
+        // push all sites into a vector
+        sites.push_back(imu);
+        sites.push_back(left_foot);
+        sites.push_back(right_foot);
+        sites.push_back(left_hand);
+        sites.push_back(right_hand);
+
 
         // assert id matches index
         for (int i = 0; i < bodies.size(); i++) {
@@ -747,10 +777,10 @@ class DigitModel: public RigidBodyTree
         std::cout<<"num_u: "<<num_u<<std::endl;
         
         std::cout<<"FwdKinematics"<<std::endl;
-        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
-        bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
-        bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
-        bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
+        // bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
+        // bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
+        // bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
+        // bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
         // bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
         // std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
 
@@ -772,7 +802,11 @@ class DigitModel: public RigidBodyTree
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000.0<<std::endl;
-        this->print_state();
+        // this->print_state();
+        std::cout<<"left_foot"<<std::endl;
+        std::cout<<this->forward_kinematics(left_foot)<<std::endl;
+        std::cout<<"right_foot"<<std::endl;
+        std::cout<<this->forward_kinematics(right_foot)<<std::endl;
 
     }
 
