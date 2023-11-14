@@ -322,13 +322,15 @@ public:
                         parent = bodies.at(i).parent;
                         S = motion_subspace_matrix(bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         F = Ic.at(i).toMatrix() * S;
-
+                        // F = motion_subspace_extract(Ic.at(i).toMatrix(), bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = S.transpose() * F;
+                        // H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = motion_subspace_extract(F.transpose(), bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis).transpose();
                         j = i;
                         while (bodies.at(j).parent != -1) {
                                 F = bodies.at(j).Xjtree.toMatrix().transpose() * F;
                                 j = bodies.at(j).parent;
                                 H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = F.transpose() * motion_subspace_matrix(bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
+                                // H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = motion_subspace_extract(F.transpose(), bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
                                 H.block(csdof[j]-dof[j],csdof[i]-dof[i],dof[j],dof[i]) = H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]).transpose();
                         }
                 }
@@ -437,6 +439,31 @@ public:
                 return oXG.toMatrix().transpose()*psi.transpose()*C_terms.block<6,1>(0,0);
         }
 
+        Eigen::Matrix<myfloat,-1,1> qvec() {
+                Eigen::Matrix<myfloat,-1,1> q;
+                q.resize(num_q);
+                myint j=0;
+                for (myint i = 0; i < num_bodies; i++) {
+                        if (bodies.at(i).joint.joint_type != JointType::FIXED) {
+                                q.block(j,0,bodies.at(i).joint.q.size(),1) = bodies.at(i).joint.q;
+                                j += bodies.at(i).joint.q.size();
+                        }
+                }
+                return q;
+        }
+
+        Eigen::Matrix<myfloat,-1,1> vvec() {
+                Eigen::Matrix<myfloat,-1,1> v;
+                v.resize(num_v);
+                myint j=0;
+                for (myint i = 0; i < num_bodies; i++) {
+                        if (bodies.at(i).joint.joint_type != JointType::FIXED) {
+                                v.block(j,0,bodies.at(i).joint.v.size(),1) = bodies.at(i).joint.v;
+                                j += bodies.at(i).joint.v.size();
+                        }
+                }
+                return v;
+        }
 
 
 };

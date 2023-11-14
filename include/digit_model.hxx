@@ -26,6 +26,9 @@ SOFTWARE.
 
 #include "rigid_body.hxx"
 #include <chrono>
+#include <iomanip>
+
+// #include "Dynamics_H_matrix_gen.cpp"
 
 using namespace rbda;
 
@@ -747,8 +750,8 @@ class DigitModel: public RigidBodyTree
             JointType jt = bodies[i].joint.joint_type;
             switch (jt) {
                 case JointType::REVOLUTE:
-                    bodies[i].joint.q.resize(1); bodies[i].joint.q.setZero();
-                    bodies[i].joint.v.resize(1); bodies[i].joint.v.setZero();
+                    bodies[i].joint.q.resize(1); bodies[i].joint.q(0)=0;
+                    bodies[i].joint.v.resize(1); bodies[i].joint.v(0)=0;
                     bodies[i].calculate_Xjtree();
                     break;
                 case JointType::TRANSLATIONAL:
@@ -766,8 +769,9 @@ class DigitModel: public RigidBodyTree
                     assert(false);
                     break;
             }
-            // std::cout << bodies[i]<<std::endl;
         }
+        
+
 
         // tests
         std::cout<<"num_bodies: "<<num_bodies<<std::endl;
@@ -777,11 +781,11 @@ class DigitModel: public RigidBodyTree
         std::cout<<"num_u: "<<num_u<<std::endl;
         
         std::cout<<"FwdKinematics"<<std::endl;
-        // bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
-        // bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
-        // bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
-        // bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
-        // bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
+        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
+        bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
+        bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
+        bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
+        bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
         // std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
 
         // std::cout<<"Body Jacobian"<<std::endl;
@@ -796,31 +800,37 @@ class DigitModel: public RigidBodyTree
         // time inertia matrix in microseconds
         auto start = std::chrono::high_resolution_clock::now();
         for (int i = 0; i < 1000; i++) {
-            // this->joint_space_inertia_matrix();
+            this->joint_space_inertia_matrix();
             // this->joint_space_nonlinear_effects();
-            this->centroidal_momentum_corriolis();
+            // this->centroidal_momentum_corriolis();
+            // this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000.0<<std::endl;
-        // this->print_state();
-        std::cout<<"left_foot"<<std::endl;
-        std::cout<<this->forward_kinematics(left_foot)<<std::endl;
-        std::cout<<"right_foot"<<std::endl;
-        std::cout<<this->forward_kinematics(right_foot)<<std::endl;
+
 
     }
 
-    void print_state() {
-        std::cout<<"q: "<<std::endl;
-        for (int i = 0; i < bodies.size(); i++) {
-            std::cout<<bodies[i].joint.q<<std::endl;
-        }
-        std::cout<<"v: "<<std::endl;
-        for (int i = 0; i < bodies.size(); i++) {
-            std::cout<<bodies[i].joint.v<<std::endl;
-        }
+    std::string ev2str(Eigen::Matrix<myfloat, -1, 1> vec, int precision){
+        // precision of 
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(precision) << vec.transpose();
+        return ss.str();
     }
 
+    void print_state(int precision=2, int width=25) {
+        // pretty print all bodies with q and v fixed width
+        // body_name    q   v
+        std::cout<<std::setw(width)<<"body_name"<<std::setw(width)<<"q"<<std::setw(width)<<"v"<<std::endl;
+        for (int i = 0; i < bodies.size(); i++) {
+            std::cout<<std::setw(width)<<bodies[i].name<<std::setw(width)<<ev2str(bodies[i].joint.q,precision)<<std::setw(width)<<ev2str(bodies[i].joint.v,precision)<<std::endl;
+        }
+
+    }
+
+    
+
+    
 /**
  * @brief Given a string of the form "a b c", returns a vector of the form [a, b, c] where a, b, c are floats
  * 

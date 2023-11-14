@@ -323,6 +323,14 @@ struct PluckerTransform
         return fv;
     }
 
+    void invApply(Eigen::Matrix<myfloat,6,-1> &rhs){
+        // Eigen::Matrix<myfloat,6,-1> fv;
+        // fv.resizeLike(rhs);
+        rhs.block(0,0,3,rhs.cols()) = this->E.transpose()*rhs.block(0,0,3,rhs.cols()) + skew(this->r)*(this->E.transpose()*rhs.block(3,0,3,rhs.cols()));
+        rhs.block(3,0,3,rhs.cols()) = this->E.transpose()*rhs.block(3,0,3,rhs.cols());
+        // return fv;
+    }
+
 };
 
 struct SpatialInertia
@@ -435,6 +443,49 @@ struct SpatialInertia
         os << spI.toMatrix() << std::endl;
 
         return os;
+    }
+};
+
+struct MotionSubspace {
+    JointType joint_type;
+    Eigen::Matrix<myfloat,3,1> axis;
+
+    // constructors
+    MotionSubspace() : joint_type(JointType::FIXED), axis(Eigen::Matrix<myfloat,3,1>::Zero()){};
+    MotionSubspace(JointType joint_type, Eigen::Matrix<myfloat,3,1> axis) : joint_type(joint_type), axis(axis){};
+
+    // operator *
+    Eigen::Matrix<myfloat,6,1> operator*(const Eigen::Matrix<myfloat,-1,1> &q)
+    {
+        std::cout<<"q"<<std::endl;
+        std::cout<<q<<std::endl;
+        Eigen::Matrix<myfloat,6,-1> S;
+        switch (joint_type)
+        {
+        case JointType::REVOLUTE:
+            S.resize(6,1);
+            S.block<3,1>(0,0) = axis;
+            S.block<3,1>(3,0) = Eigen::Matrix<myfloat,3,1>::Zero();
+            break;
+        case JointType::TRANSLATIONAL:
+            S.resize(6,3);
+            S.block<3,3>(0,0) = Eigen::Matrix<myfloat,3,3>::Zero();
+            S.block<3,3>(3,0) = Eigen::Matrix<myfloat,3,3>::Identity();
+            break;
+        case JointType::SPHERICAL:
+            S.resize(6,3);
+            S.block<3,3>(0,0) = Eigen::Matrix<myfloat,3,3>::Identity();
+            S.block<3,3>(3,0) = Eigen::Matrix<myfloat,3,3>::Zero();
+            break;
+        default:
+            std::cerr << "Joint type not implemented" << std::endl;
+            assert(false);
+            break;
+        }
+        std::cout<<"S"<<std::endl;
+        std::cout<<S<<std::endl;
+        std::cout<<q<<std::endl;
+        return S*q;
     }
 };
 

@@ -59,5 +59,54 @@ namespace rbda
         return S;
     }
 
+    inline Eigen::Matrix<myfloat,6,1> motion_subspace_vel(JointType joint_type, Eigen::Matrix<myfloat,3,1> joint_axis, Eigen::Matrix<myfloat,-1,1> v){
+        Eigen::Matrix<myfloat,6,1> S_v;
+        switch (joint_type)
+        {
+        case JointType::REVOLUTE:
+            S_v.block<3,1>(0,0) = joint_axis*v;
+            S_v.block<3,1>(3,0) = Eigen::Matrix<myfloat,3,1>::Zero();
+            break;
+        case JointType::TRANSLATIONAL:
+            S_v.block<3,1>(0,0) = Eigen::Matrix<myfloat,3,1>::Zero();
+            S_v.block<3,1>(3,0) = v;
+            break;
+        case JointType::SPHERICAL:
+            S_v.block<3,1>(0,0) = v;
+            S_v.block<3,1>(3,0) = Eigen::Matrix<myfloat,3,1>::Zero();
+            break;
+        default:
+            std::cerr << "Joint type not implemented" << std::endl;
+            assert(false);
+            break;
+        }
+        return S_v;
+    }
+
+    inline Eigen::Matrix<myfloat,-1,-1> motion_subspace_extract(Eigen::Matrix<myfloat,-1,6> mat, JointType joint_type,Eigen::Matrix<myfloat,3,1> joint_axis){
+        
+        switch (joint_type)
+        {
+            case JointType::REVOLUTE:
+                // std::cout<<"mat" << mat << std::endl;
+                // std::cout<<"joint_axis" << joint_axis << std::endl;
+                // std::cout<<"mat.block(2,0,mat.rows(),1)" << mat.block(0,2,mat.rows(),1) << std::endl;
+                return mat.block(0,2,mat.rows(),1)*joint_axis(2); // TODO: remove hardcoding z
+                break;
+            case JointType::TRANSLATIONAL:
+                return mat.block(0,3,mat.rows(),3);
+                break;
+            case JointType::SPHERICAL:
+                return mat.block(0,0,mat.rows(),3);
+                break;
+            default:
+                std::cerr << "Joint type not implemented" << std::endl;
+                assert(false);
+                break;
+        }
+        return Eigen::Matrix<myfloat,-1,-1>();
+
+    }
+
 };
 #endif // DYNAMICS_FUNCTIONS_HXX

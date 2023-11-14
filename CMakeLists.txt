@@ -5,7 +5,7 @@ project(Digit_RBKD VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 find_package(Eigen3 REQUIRED)
-
+# find_package(Gperftools REQUIRED) 
 include(CTest)
 enable_testing()
 
