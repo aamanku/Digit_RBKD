@@ -74,7 +74,7 @@ class DigitModel: public RigidBodyTree
     public:
 
     // constructors
-    DigitModel() : RigidBodyTree(){
+    DigitModel() {
 
         // start constructing the model
         this->num_bodies = -1;
@@ -770,6 +770,10 @@ class DigitModel: public RigidBodyTree
                     break;
             }
         }
+
+        this->initialize();
+
+        
         
 
 

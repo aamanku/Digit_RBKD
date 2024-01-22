@@ -31,6 +31,7 @@ SOFTWARE.
 #include "common_defines.hxx"
 #include "rbda/rbda.hxx"
 #include <numeric>
+#include <vector>
 using namespace rbda;
 
 struct Site
@@ -167,7 +168,16 @@ public:
         std::vector<Site> sites;
         Eigen::Matrix<myfloat, 3, 1> gravity = Eigen::Matrix<myfloat, 3, 1>(0.0, 0.0, -9.81);
 
+        // model data
+        Eigen::Matrix<myfloat,-1,-1> H;
+
+
+
         // methods
+        void initialize(){
+                assert(num_bodies > 0);
+                H.resize(num_v,num_v);
+        }
         /**
          * @brief Get vector of ids of all bodies between body_id and parent_body_id
          * 
@@ -293,13 +303,13 @@ public:
 
         Eigen::Matrix<myfloat,-1,-1> joint_space_inertia_matrix()
         {
-                Eigen::Matrix<myfloat,-1,-1> H;
                 std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
+                dof.reserve(num_bodies);
+                csdof.reserve(num_bodies);
                 for (myint i = 0; i < num_bodies; i++) {
                         dof.push_back(bodies.at(i).joint.v.size());
                         csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
                 }
-                H.resize(csdof.back(),csdof.back());
                 H.setZero();
 
                 // composite inertia calculation
@@ -317,21 +327,20 @@ public:
                 // joint space inertia calculation
                 Eigen::Matrix<myfloat,6,-1> F,S;
                 myint j=0;
+
                 
                 for (myint i = 0; i < num_bodies; i++) {
                         parent = bodies.at(i).parent;
                         S = motion_subspace_matrix(bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         F = Ic.at(i).toMatrix() * S;
-                        // F = motion_subspace_extract(Ic.at(i).toMatrix(), bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = S.transpose() * F;
-                        // H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = motion_subspace_extract(F.transpose(), bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis).transpose();
                         j = i;
                         while (bodies.at(j).parent != -1) {
-                                F = bodies.at(j).Xjtree.toMatrix().transpose() * F;
+                                F = (bodies.at(j).Xjtree.toMatrix().transpose() * F).eval();
                                 j = bodies.at(j).parent;
-                                H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = F.transpose() * motion_subspace_matrix(bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
-                                // H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = motion_subspace_extract(F.transpose(), bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
-                                H.block(csdof[j]-dof[j],csdof[i]-dof[i],dof[j],dof[i]) = H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]).transpose();
+                                S = motion_subspace_matrix(bodies.at(j).joint.joint_type, bodies.at(j).joint.joint_axis);
+                                H.block(csdof[j]-dof[j],csdof[i]-dof[i],dof[j],dof[i]) = S.transpose() * F;
+                                H.block(csdof[i]-dof[i],csdof[j]-dof[j],dof[i],dof[j]) = H.block(csdof[j]-dof[j],csdof[i]-dof[i],dof[j],dof[i]).transpose().eval();
                         }
                 }
 
