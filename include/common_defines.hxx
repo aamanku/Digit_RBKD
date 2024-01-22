@@ -24,21 +24,46 @@ SOFTWARE.
 #ifndef COMMON_DEFINES_HXX
 #define COMMON_DEFINES_HXX
 #include <eigen3/Eigen/Dense>
+#include <cppad/cg.hpp>
 
 #define DEBUG 1
-#define MYINF 1e10
+#define MYINF 1e15
 
-typedef double myfloat;
-typedef int myint;
+using myfloat = double;
+using myint = int;
 
-typedef Eigen::Matrix<myfloat, 3, 1> Vector3;
-typedef Eigen::Matrix<myfloat, 3, 3> Matrix3;
+using Vector3 = Eigen::Matrix<myfloat, 3, 1>;
+using Matrix3 = Eigen::Matrix<myfloat, 3, 3>;
 
-typedef Eigen::Matrix<myfloat, 4, 1> Vector4;
-typedef Eigen::Matrix<myfloat, 4, 4> Matrix4;
+using Vector4 = Eigen::Matrix<myfloat, 4, 1>;
+using Matrix4 = Eigen::Matrix<myfloat, 4, 4>;
 
-typedef Eigen::Matrix<myfloat, 6, 1> Vector6;
-typedef Eigen::Matrix<myfloat, 6, 6> Matrix6;
+using Vector6 = Eigen::Matrix<myfloat, 6, 1>;
+using Matrix6 = Eigen::Matrix<myfloat, 6, 6>;
+
+
+using ADBase = CppAD::cg::CG<myfloat>;
+using ADScalar = CppAD::AD<ADBase>;
+using ADVectorX = Eigen::Matrix<ADScalar, -1, 1>;
+using ADMatrixX = Eigen::Matrix<ADScalar, -1, -1>;
+
+using ADFun = CppAD::ADFun<ADBase>;
+
+using ADVector3 = Eigen::Matrix<ADScalar, 3, 1>;
+using ADMatrix3 = Eigen::Matrix<ADScalar, 3, 3>;
+
+using ADVector4 = Eigen::Matrix<ADScalar, 4, 1>;
+using ADMatrix4 = Eigen::Matrix<ADScalar, 4, 4>;
+
+using ADVector6 = Eigen::Matrix<ADScalar, 6, 1>;
+using ADMatrix6 = Eigen::Matrix<ADScalar, 6, 6>;
+
+
+
+
+
+
+
 
 enum class JointType { 
     FIXED, 

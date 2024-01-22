@@ -37,6 +37,10 @@ add_executable(CodeGenTest src/test/CodeGenTest.cpp src/temp_file_fix.cpp )
 include_directories( ${EIGEN3_INCLUDE_DIR} include ${Boost_INCLUDE_DIRS})
 target_link_libraries(CodeGenTest Boost::filesystem Eigen3::Eigen)
 
+add_executable(CodeGenEigenTest src/test/CodeGenEigenTest.cpp src/temp_file_fix.cpp )
+include_directories( ${EIGEN3_INCLUDE_DIR} include ${Boost_INCLUDE_DIRS})
+target_link_libraries(CodeGenEigenTest Boost::filesystem Eigen3::Eigen)
+
 
 
 
