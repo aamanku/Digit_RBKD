@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <casadi/casadi.hpp>
 
-#include "digit_rbkd/digit_model.hxx"
+#include "digit_rbkd/digit_model_library.hpp"
 
 int main(){
     DigitModel model;

@@ -195,7 +195,7 @@ public:
          * @param precision
          * @param width
          */
-        void print_state(int precision=2, int width=25) {
+        void print_state(int precision=2, int width=25) const {
             // pretty print all bodies with q and v fixed width
             // body_name    q   v
             std::cout<<std::setw(width)<<"body_name"<<std::setw(width)<<"q"<<std::setw(width)<<"v"<<std::endl;
@@ -212,15 +212,17 @@ public:
          * @param parent_body_id 
          * @return std::vector<myint> 
          */
-        inline std::vector<myint> kappa(myint body_id, myint parent_body_id = -1)
+        inline std::vector<myint> kappa(myint body_id, myint parent_body_id = -1)const
         {
                 std::vector<myint> kappa;
                 kappa.push_back(body_id);
+                if(body_id == parent_body_id) return kappa;
                 // go up the tree
                 while (bodies[body_id].parent != parent_body_id)
                 {
                         body_id = bodies[body_id].parent;
                         kappa.push_back(body_id);
+                        if(body_id == -1) return std::vector<myint>();
                 }
                 // reverse the vector
                 std::reverse(kappa.begin(), kappa.end());
@@ -228,7 +230,7 @@ public:
                 return kappa;
         }
 
-        inline std::vector<myint> branch_dof(std::vector<myint> kappa)
+        inline std::vector<myint> branch_dof(std::vector<myint> kappa)const
         {
                 std::vector<myint> branch_dof;
                 for (myint i = 0; i < kappa.size(); i++)
@@ -254,8 +256,17 @@ public:
         }
 
 
-        PluckerTransform spatial_body_forward_kinematics(myint body_id, myint parent_body_id = -1)
+        PluckerTransform spatial_body_forward_kinematics(myint body_id, myint parent_body_id = -1) const
         {
+                // Check if parent_body_id is a valid parent of body_id
+                if (kappa(body_id, parent_body_id).size() == 0)
+                {
+                        std::cerr << "parent_body_id is not a valid parent of body_id" << std::endl;
+                        throw std::invalid_argument("parent_body_id is not a valid parent of body_id");
+                }
+
+                if(body_id == parent_body_id) return PluckerTransform(); // return identity transform
+
                 PluckerTransform iXl = bodies[body_id].Xjtree;
                 // go up the tree
                 while (bodies[body_id].parent != parent_body_id)
@@ -267,7 +278,7 @@ public:
                 return iXl;
         }
 
-        Eigen::Matrix<myfloat,6,-1> spatial_body_jacobian(myint body_id, myint parent_body_id = -1)
+        Eigen::Matrix<myfloat,6,-1> spatial_body_jacobian(myint body_id, myint parent_body_id = -1) const
         {
                 Eigen::Matrix<myfloat, 6, -1> Jb;
                 std::vector<myint> branch = this->kappa(body_id, parent_body_id);
@@ -291,7 +302,7 @@ public:
                 return Jb; 
         }
 
-        MotionVector spatial_body_corriolis(myint body_id, myint parent_body_id = -1) {
+        MotionVector spatial_body_corriolis(myint body_id, myint parent_body_id = -1) const {
                 PluckerTransform oXi,lXi,iXl;
                 MotionVector vJ;
                 MotionVector ovi;
@@ -315,7 +326,7 @@ public:
                 return oXi*a;
         }
 
-        Pose forward_kinematics(Pose frame, myint body_id, myint parent_body_id = -1)
+        Pose forward_kinematics(Pose frame, myint body_id, myint parent_body_id = -1)const
         {
                 PluckerTransform Xup = spatial_body_forward_kinematics(body_id, parent_body_id);
                 PluckerTransform Xframe = PluckerTransform(frame) * Xup;
@@ -323,12 +334,17 @@ public:
                 return Xframe.toPose();
         }
 
-        Pose forward_kinematics(Site site, myint parent_body_id = -1)
+        Pose forward_kinematics(Site site, myint parent_body_id = -1)const
         {
                 return forward_kinematics(site.Xtree.toPose(), site.parent_body, parent_body_id);
         }
 
-        Eigen::Matrix<myfloat,-1,-1> joint_space_inertia_matrix()
+        Pose forward_kinematics(myint site_id, myint parent_body_id = -1)const
+        {
+                return forward_kinematics(sites[site_id], parent_body_id);
+        }
+
+        Eigen::Matrix<myfloat,-1,-1> joint_space_inertia_matrix()const
         {
                 std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
                 dof.reserve(num_bodies);
@@ -383,7 +399,7 @@ public:
                 return H;
         }
 
-        Eigen::Matrix<myfloat,-1,1> joint_space_nonlinear_effects(bool include_gravity = true) { 
+        Eigen::Matrix<myfloat,-1,1> joint_space_nonlinear_effects(bool include_gravity = true) const {
                 Eigen::Matrix<myfloat,-1,1> C;
                 std::vector<myint> dof, csdof; // dof vector and cumulative sum of dof vector
                 for (myint i = 0; i < num_bodies; i++) {
@@ -426,7 +442,7 @@ public:
 
         }
 
-        myfloat total_mass() {
+        myfloat total_mass() const{
                 myfloat mass = 0.0;
                 for (myint i = 0; i < num_bodies; i++) {
                         mass += bodies.at(i).spI.m;
@@ -434,7 +450,7 @@ public:
                 return mass;
         }
 
-        Eigen::Matrix<myfloat,3,1> com_position() {
+        Eigen::Matrix<myfloat,3,1> com_position() const {
                 
                 // calculate composite inertia
                 std::vector<SpatialInertia> Ic;
@@ -453,7 +469,7 @@ public:
                 return Itot.com_pos();
         }
 
-        Eigen::Matrix<myfloat,6,-1> centroidal_momentum_matrix(Eigen::Matrix<myfloat,-1,-1> H = Eigen::Matrix<myfloat,-1,-1>()) {
+        Eigen::Matrix<myfloat,6,-1> centroidal_momentum_matrix(Eigen::Matrix<myfloat,-1,-1> H = Eigen::Matrix<myfloat,-1,-1>()) const {
 
                 // Using wensing's method https://www.cs.cmu.edu/~cga/z/Wensing_IJHR_2016.pdf
                 H = (H.rows()==0)?this->joint_space_inertia_matrix():H;
@@ -467,7 +483,7 @@ public:
                 return oXG.toMatrix().transpose()*psi.transpose()*H.block(0,0,6,H.cols());
         }
 
-        Eigen::Matrix<myfloat,6,1> centroidal_momentum_corriolis(Eigen::Matrix<myfloat,-1,1> C_terms = Eigen::Matrix<myfloat,-1,1>()) {
+        Eigen::Matrix<myfloat,6,1> centroidal_momentum_corriolis(Eigen::Matrix<myfloat,-1,1> C_terms = Eigen::Matrix<myfloat,-1,1>()) const {
                 
                 // Using wensing's method https://www.cs.cmu.edu/~cga/z/Wensing_IJHR_2016.pdf
                 C_terms = (C_terms.rows()==0)?this->joint_space_nonlinear_effects(false):C_terms;
@@ -482,7 +498,7 @@ public:
         }
 
 
-        Eigen::Matrix<myfloat,-1,1> get_qvec() {
+        Eigen::Matrix<myfloat,-1,1> get_qvec() const {
                 Eigen::Matrix<myfloat,-1,1> q;
                 q.resize(num_q);
                 myint j=0;
@@ -495,7 +511,7 @@ public:
                 return q;
         }
 
-        Eigen::Matrix<myfloat,-1,1> get_vvec() {
+        Eigen::Matrix<myfloat,-1,1> get_vvec() const {
                 Eigen::Matrix<myfloat,-1,1> v;
                 v.resize(num_v);
                 myint j=0;

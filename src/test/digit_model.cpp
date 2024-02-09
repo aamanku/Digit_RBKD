@@ -1,5 +1,5 @@
 #include <iostream>
-#include "digit_rbkd/digit_model.hxx"
+#include "digit_rbkd/digit_model_library.hpp"
 
 #define ASSERT_EQ(a, b) if (a != b) { std::cout << "Test failed: " << a << " != " << b << std::endl; return 1; }
 
@@ -14,6 +14,7 @@ int main(){
     ASSERT_EQ(model.num_q, 37);
     ASSERT_EQ(model.num_v, 36);
     ASSERT_EQ(model.num_u, 20);
+
 
     return 0;
 }
