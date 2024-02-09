@@ -25,7 +25,7 @@ SOFTWARE.
 #define THREE_D_VECTORS_AND_ROTATION_HXX
 
 #include <eigen3/Eigen/Dense>
-#include "common_defines.hxx"
+#include "digit_rbkd/common_defines.hxx"
 
 // Porting all the function form roy featherstone's rbda library
 // https://royfeatherstone.org/spatial/v2/index.html
@@ -74,34 +74,34 @@ inline Eigen::Matrix<myfloat,3,3> rz(myfloat theta){
     return E;
 }
 
-/**
- * @brief vtoE(v) converts a 3x1 vector v to a 3x3 coordinate transform matrix E.
- * 
- * @param v 3x1 vector
- * @return Eigen::Matrix<myfloat,3,3> E 3x3 coordinate transform matrix
- */
-inline Eigen::Matrix<myfloat,3,3> vtoE(Eigen::Matrix<myfloat,3,1> v){
-    myfloat theta = v.norm();
-    Eigen::Matrix<myfloat,3,3> E;
-    if(theta == 0){
-        E = Eigen::Matrix<myfloat,3,3>::Identity();
-    }else{
-        Eigen::Matrix<myfloat,3,1> axis = v/theta;
-        E = Eigen::AngleAxis<myfloat>(theta, axis).toRotationMatrix();
-    }
-    return E;
-}
-
-/**
- * @brief Etov(E) converts a 3x3 coordinate transform matrix E to a 3x1 vector v.
- * 
- * @param E 3x3 coordinate transform matrix
- * @return Eigen::Matrix<myfloat,3,1> v 3x1 vector
- */
-inline Eigen::Matrix<myfloat,3,1> Etov(Eigen::Matrix<myfloat,3,3> E) {
-    Eigen::AngleAxis<myfloat> aa(E);
-    return aa.angle()*aa.axis();
-}
+///**
+// * @brief vtoE(v) converts a 3x1 vector v to a 3x3 coordinate transform matrix E.
+// *
+// * @param v 3x1 vector
+// * @return Eigen::Matrix<myfloat,3,3> E 3x3 coordinate transform matrix
+// */
+//inline Eigen::Matrix<myfloat,3,3> vtoE(Eigen::Matrix<myfloat,3,1> v){
+//    myfloat theta = v.norm();
+//    Eigen::Matrix<myfloat,3,3> E;
+//    if(theta == 0){
+//        E = Eigen::Matrix<myfloat,3,3>::Identity();
+//    }else{
+//        Eigen::Matrix<myfloat,3,1> axis = v/theta;
+//        E = Eigen::AngleAxis<myfloat>(theta, axis).toRotationMatrix();
+//    }
+//    return E;
+//}
+//
+///**
+// * @brief Etov(E) converts a 3x3 coordinate transform matrix E to a 3x1 vector v.
+// *
+// * @param E 3x3 coordinate transform matrix
+// * @return Eigen::Matrix<myfloat,3,1> v 3x1 vector
+// */
+//inline Eigen::Matrix<myfloat,3,1> Etov(Eigen::Matrix<myfloat,3,3> E) {
+//    Eigen::AngleAxis<myfloat> aa(E);
+//    return aa.angle()*aa.axis();
+//}
 
 
 // /**

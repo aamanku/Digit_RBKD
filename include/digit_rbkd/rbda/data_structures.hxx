@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include "3d_vectors_and_rotation.hxx"
 #include "spatial_vector_arithmetic.hxx"
-#include "common_defines.hxx"
+#include "digit_rbkd/common_defines.hxx"
 
 
 namespace rbda

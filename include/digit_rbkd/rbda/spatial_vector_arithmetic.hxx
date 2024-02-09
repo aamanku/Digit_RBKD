@@ -26,7 +26,7 @@ SOFTWARE.
 
 #include <eigen3/Eigen/Dense>
 #include "3d_vectors_and_rotation.hxx"
-#include "common_defines.hxx"
+#include "digit_rbkd/common_defines.hxx"
 
 // Porting all the function form roy featherstone's rbda library
 // https://royfeatherstone.org/spatial/v2/index.html

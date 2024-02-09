@@ -29,7 +29,7 @@ SOFTWARE.
 #include <iostream>
 #include <string>
 #include "common_defines.hxx"
-#include "rbda/rbda.hxx"
+#include "digit_rbkd/rbda/rbda.hxx"
 #include <numeric>
 #include <vector>
 using namespace rbda;
@@ -333,7 +333,8 @@ public:
                         parent = bodies.at(i).parent;
                         S = motion_subspace_matrix(bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         F = Ic.at(i).toMatrix() * S;
-                        H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = S.transpose() * F;
+                        auto ST = S.transpose() *F;
+                        H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = ST;
                         j = i;
                         while (bodies.at(j).parent != -1) {
                                 F = (bodies.at(j).Xjtree.toMatrix().transpose() * F).eval();

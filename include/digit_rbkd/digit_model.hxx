@@ -835,37 +835,37 @@ class DigitModel: public RigidBodyTree
     
 
     
-/**
- * @brief Given a string of the form "a b c", returns a vector of the form [a, b, c] where a, b, c are floats
- * 
- * @param str Input string
- * @return Eigen::Matrix<myfloat, -1, 1> Output vector
- */
-Eigen::Matrix<myfloat, -1, 1> str2vec(std::string str){
-    std::stringstream ss(str);
-    Eigen::Matrix<myfloat, -1, 1> vec;
-    myfloat val;
-    myint i = 0;
-    while(ss >> val){
-        // add dimension to the vector
-        vec.conservativeResize(i+1);
-        vec(i) = val;
-        i++;
-    }
-    return vec;
-}
-
-/**
- * @brief myfloat from string
- * 
- * @param std::string
- * @return myfloat 
- */
-myfloat str2f(std::string str){
-    std::stringstream ss(str);
-    myfloat val;
-    ss >> val;
-    return val;
-}
+///**
+// * @brief Given a string of the form "a b c", returns a vector of the form [a, b, c] where a, b, c are floats
+// *
+// * @param str Input string
+// * @return Eigen::Matrix<myfloat, -1, 1> Output vector
+// */
+//Eigen::Matrix<myfloat, -1, 1> str2vec(std::string str){
+//    std::stringstream ss(str);
+//    Eigen::Matrix<myfloat, -1, 1> vec;
+//    myfloat val;
+//    myint i = 0;
+//    while(ss >> val){
+//        // add dimension to the vector
+//        vec.conservativeResize(i+1);
+//        vec(i) = val;
+//        i++;
+//    }
+//    return vec;
+//}
+//
+///**
+// * @brief myfloat from string
+// *
+// * @param std::string
+// * @return myfloat
+// */
+//myfloat str2f(std::string str){
+//    std::stringstream ss(str);
+//    myfloat val;
+//    ss >> val;
+//    return val;
+//}
 };
 #endif // DIGIT_MODEL_HXX

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include <iostream>
-#include "digit_model.hxx"
+#include "digit_rbkd/digit_model.hxx"
 #include <Eigen/Dense>
 #include <vector>
 
