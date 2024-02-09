@@ -56,6 +56,7 @@ struct Joint
         myfloat gear_ratio = 0.0;                                                         // gear ratio of the motor. gear_ratio = 0.0 means no motor
         myfloat armature = 0.0;                                                           // armature of the motor
         Eigen::Matrix<myfloat, 1, 2> motor_limits = Eigen::Matrix<myfloat, 1, 2>::Zero(); // lower and upper limits of the motor
+        myfloat u = 0.0;                                                                  // motor input
 
         Eigen::Matrix<myfloat, -1, 1> q; // joint position
         Eigen::Matrix<myfloat, -1, 1> v; // joint velocity
@@ -76,6 +77,7 @@ struct Joint
                 os << "motor_limits: " << joint.motor_limits << std::endl;
                 os << "q: " << joint.q.transpose() << std::endl;
                 os << "v: " << joint.v.transpose() << std::endl;
+                os << "u: " << joint.u << std::endl;
                 return os;
         }
 };
@@ -143,6 +145,11 @@ struct RigidBody
                 this->joint.v = v;
         }
 
+        void set_u(myfloat u)
+        {
+                this->joint.u = u;
+        }
+
         // operator <<
         friend std::ostream &operator<<(std::ostream &os, const RigidBody &rb)
         {
@@ -159,6 +166,7 @@ struct RigidBody
 class RigidBodyTree
 {
 public:
+        std::string name;
         myint num_bodies=-1;
         myint num_sites=0;
         myint num_q=0;
@@ -168,16 +176,35 @@ public:
         std::vector<Site> sites;
         Eigen::Matrix<myfloat, 3, 1> gravity = Eigen::Matrix<myfloat, 3, 1>(0.0, 0.0, -9.81);
 
-        // model data
-        Eigen::Matrix<myfloat,-1,-1> H;
-
 
 
         // methods
         void initialize(){
                 assert(num_bodies > 0);
-                H.resize(num_v,num_v);
+                // Print info
+                std::cout<<"Model Name: " << this->name << std::endl;
+                std::cout<<"Number of Bodies: " << this->num_bodies << std::endl;
+                std::cout<<"Number of Sites: " << this->num_sites << std::endl;
+                std::cout<<"Number of Generalized Coordinates: " << this->num_q << std::endl;
+                std::cout<<"Number of Generalized Velocities: " << this->num_v << std::endl;
+                std::cout<<"Number of Generalized Forces: " << this->num_u << std::endl;
         }
+
+        /**
+         * @brief Pretty print the state of the model
+         * @param precision
+         * @param width
+         */
+        void print_state(int precision=2, int width=25) {
+            // pretty print all bodies with q and v fixed width
+            // body_name    q   v
+            std::cout<<std::setw(width)<<"body_name"<<std::setw(width)<<"q"<<std::setw(width)<<"v"<<std::endl;
+            for (int i = 0; i < bodies.size(); i++) {
+                std::cout<<std::setw(width)<<bodies[i].name<<std::setw(width)<<ev2str(bodies[i].joint.q,precision)<<std::setw(width)<<ev2str(bodies[i].joint.v,precision)<<std::endl;
+            }
+
+        }
+
         /**
          * @brief Get vector of ids of all bodies between body_id and parent_body_id
          * 
@@ -310,6 +337,8 @@ public:
                         dof.push_back(bodies.at(i).joint.v.size());
                         csdof.push_back(std::accumulate(dof.begin(), dof.end(), 0));
                 }
+                Eigen::Matrix<myfloat,-1,-1> H;
+                H.resize(num_v,num_v);
                 H.setZero();
 
                 // composite inertia calculation
@@ -333,8 +362,9 @@ public:
                         parent = bodies.at(i).parent;
                         S = motion_subspace_matrix(bodies.at(i).joint.joint_type, bodies.at(i).joint.joint_axis);
                         F = Ic.at(i).toMatrix() * S;
-                        auto ST = S.transpose() *F;
-                        H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = ST;
+
+                        H.block(csdof[i]-dof[i],csdof[i]-dof[i],dof[i],dof[i]) = S.transpose() * F; // clion is showing error here but it is not an error
+
                         j = i;
                         while (bodies.at(j).parent != -1) {
                                 F = (bodies.at(j).Xjtree.toMatrix().transpose() * F).eval();
@@ -372,9 +402,9 @@ public:
                 v.resize(num_bodies);
                 fvp.resize(num_bodies);
 
-                avp.at(0) = MotionVector(Eigen::Vector<myfloat,3>::Zero(),-gravity*((include_gravity)?1.0:0.0));
+                avp.at(0) = MotionVector(Eigen::Matrix<myfloat,3,1>::Zero(),-gravity*((include_gravity)?1.0:0.0));
                 v.at(0) = MotionVector(Eigen::Matrix<myfloat,6,1>(motion_subspace_matrix(bodies[0].joint.joint_type, bodies[0].joint.joint_axis)*bodies[0].joint.v)); // TODO: find a better way to do this;
-                fvp.at(0) = ForceVector(Eigen::Vector<myfloat,3>::Zero(),Eigen::Vector<myfloat,3>::Zero());
+                fvp.at(0) = ForceVector(Eigen::Matrix<myfloat,3,1>::Zero(),Eigen::Matrix<myfloat,3,1>::Zero());
                 
 
                 //go down the tree
@@ -428,7 +458,8 @@ public:
                 // Using wensing's method https://www.cs.cmu.edu/~cga/z/Wensing_IJHR_2016.pdf
                 H = (H.rows()==0)?this->joint_space_inertia_matrix():H;
 
-                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+//                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+                Eigen::Matrix<myfloat,6,6> psi = invertMatrix(this->spatial_body_jacobian(1)); // body jacobian of rot of base
                 PluckerTransform oXG;
                 oXG.E = Eigen::Matrix<myfloat,3,3>::Identity();
                 oXG.r = - SpatialInertia(psi.transpose()*H.block<6,6>(0,0)*psi).com_pos(); // to directly get Itot
@@ -444,12 +475,14 @@ public:
                 PluckerTransform oXG;
                 oXG.E = Eigen::Matrix<myfloat,3,3>::Identity();
                 oXG.r = - this->com_position();
-                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+//                Eigen::Matrix<myfloat,6,6> psi = this->spatial_body_jacobian(1).inverse();// body jacobian of rot of base
+                Eigen::Matrix<myfloat,6,6> psi = invertMatrix(this->spatial_body_jacobian(1)); // body jacobian of rot of base
                 
                 return oXG.toMatrix().transpose()*psi.transpose()*C_terms.block<6,1>(0,0);
         }
 
-        Eigen::Matrix<myfloat,-1,1> qvec() {
+
+        Eigen::Matrix<myfloat,-1,1> get_qvec() {
                 Eigen::Matrix<myfloat,-1,1> q;
                 q.resize(num_q);
                 myint j=0;
@@ -462,7 +495,7 @@ public:
                 return q;
         }
 
-        Eigen::Matrix<myfloat,-1,1> vvec() {
+        Eigen::Matrix<myfloat,-1,1> get_vvec() {
                 Eigen::Matrix<myfloat,-1,1> v;
                 v.resize(num_v);
                 myint j=0;
@@ -474,6 +507,43 @@ public:
                 }
                 return v;
         }
+
+//        Eigen::Matrix<myfloat,-1,1> get_uvec(){
+//                Eigen::Matrix<myfloat,-1,1> u;
+//                u.resize(num_u);
+//                myint j=0;
+//                for (myint i = 0; i < num_bodies; i++) {
+//                        // unactuated joints have 0 gear ratio
+//                        if (bodies.at(i).joint.gear_ratio != 0.0) {
+//                                u(j) = bodies.at(i).joint.u;
+//                                j++;
+//                        }
+//                }
+//        }
+
+        void set_qpos(const Eigen::Matrix<myfloat,-1,1> &q) {
+                myint j=0;
+                for (myint i = 0; i < num_bodies; i++) {
+                        if (bodies.at(i).joint.joint_type != JointType::FIXED) {
+                                bodies.at(i).joint.q = q.block(j,0,bodies.at(i).joint.q.size(),1);
+                                j += bodies.at(i).joint.q.size();
+
+                        }
+                        bodies.at(i).calculate_Xjtree();
+                }
+        }
+
+        void set_qvel(const Eigen::Matrix<myfloat,-1,1> &v) {
+                myint j=0;
+                for (myint i = 0; i < num_bodies; i++) {
+                        if (bodies.at(i).joint.joint_type != JointType::FIXED) {
+                                bodies.at(i).joint.v = v.block(j,0,bodies.at(i).joint.v.size(),1);
+                                j += bodies.at(i).joint.v.size();
+                        }
+                }
+        }
+
+
 
 
 };

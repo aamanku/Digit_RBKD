@@ -75,7 +75,7 @@ class DigitModel: public RigidBodyTree
 
     // constructors
     DigitModel() {
-
+        this->name = "Digit";
         // start constructing the model
         this->num_bodies = -1;
         this->num_sites = 0;
@@ -95,7 +95,7 @@ class DigitModel: public RigidBodyTree
                             -MYINF, MYINF,
                             -MYINF, MYINF;
 
-        base_trans.spI = SpatialInertia(0, Eigen::Matrix<myfloat,3,1>(0,0,0), Eigen::Matrix<myfloat,6,1>(0,0,0,0,0,0));
+        base_trans.spI = SpatialInertia(0, Eigen::Matrix<myfloat,3,1>(0.0,0,0), Eigen::Matrix<myfloat,6,1>({0.0,0,0,0,0,0}));
         base_trans.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(0.0, 0.0, 0.0), Eigen::Matrix<myfloat,3,1>(0.0, 0.0, 0.0));
 
         //base_rot
@@ -667,30 +667,35 @@ class DigitModel: public RigidBodyTree
         imu.name = "imu";
         imu.parent_body = base_rot.id;
         imu.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(0, -90, 0), Eigen::Matrix<myfloat,3,1>(0, 0, 0.0));
+        this->num_sites++;
 
         // left foot
         Site left_foot;
         left_foot.name = "left-foot";
         left_foot.parent_body = left_toe_roll.id;
         left_foot.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-60, 0, -90), Eigen::Matrix<myfloat,3,1>(0.0, -0.05456, -0.0315));
+        this->num_sites++;
 
         // right foot
         Site right_foot;
         right_foot.name = "right-foot";
         right_foot.parent_body = right_toe_roll.id;
         right_foot.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(60, 0, 90), Eigen::Matrix<myfloat,3,1>(0.0, 0.05456, -0.0315));
+        this->num_sites++;
 
         // left hand
         Site left_hand;
         left_hand.name = "left-hand";
         left_hand.parent_body = left_elbow.id;
         left_hand.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-90, 0, -10), Eigen::Matrix<myfloat,3,1>(0.369, 0.0, -0.07912));
+        this->num_sites++;
 
         // right hand
         Site right_hand;
         right_hand.name = "right-hand";
         right_hand.parent_body = right_elbow.id;
         right_hand.Xtree = PluckerTransform(Eigen::Matrix<myfloat,3,1>(-90, 0, 10), Eigen::Matrix<myfloat,3,1>(0.369, 0.0, -0.07912));
+        this->num_sites++;
 
         
 
@@ -727,6 +732,11 @@ class DigitModel: public RigidBodyTree
         bodies.push_back(right_shoulder_pitch);
         bodies.push_back(right_shoulder_yaw);
         bodies.push_back(right_elbow);
+        if(bodies.size() != num_bodies){
+            std::cerr<<"bodies.size() != num_bodies"<<std::endl;
+            std::cerr<<"bodies.size(): "<<bodies.size()<<std::endl;
+            std::cerr<<"num_bodies: "<<num_bodies<<std::endl;
+        }
 
         // push all sites into a vector
         sites.push_back(imu);
@@ -734,6 +744,11 @@ class DigitModel: public RigidBodyTree
         sites.push_back(right_foot);
         sites.push_back(left_hand);
         sites.push_back(right_hand);
+        if(sites.size() != num_sites){
+            std::cerr<<"sites.size() != num_sites"<<std::endl;
+            std::cerr<<"sites.size(): "<<sites.size()<<std::endl;
+            std::cerr<<"num_sites: "<<num_sites<<std::endl;
+        }
 
 
         // assert id matches index
@@ -775,62 +790,49 @@ class DigitModel: public RigidBodyTree
 
         
         
-
-
-        // tests
-        std::cout<<"num_bodies: "<<num_bodies<<std::endl;
-        std::cout<<"bodies.size(): "<<bodies.size()<<std::endl;
-        std::cout<<"num_q: "<<num_q<<std::endl;
-        std::cout<<"num_v: "<<num_v<<std::endl;
-        std::cout<<"num_u: "<<num_u<<std::endl;
-        
-        std::cout<<"FwdKinematics"<<std::endl;
-        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
-        bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
-        bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
-        bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
-        bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
-        // std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
-
-        // std::cout<<"Body Jacobian"<<std::endl;
-        // std::cout<<this->spatial_body_jacobian(right_hip_yaw_id)<<std::endl;
-        
-        // std::cout<<this->spatial_body_corriolis(left_toe_pitch_id)<<std::endl;
-
-
-        // std::cout<< this->joint_space_inertia_matrix()<<std::endl;
-        std::cout<< this->com_position() << std::endl;
-        std::cout<<this->centroidal_momentum_corriolis();
-        // time inertia matrix in microseconds
-        auto start = std::chrono::high_resolution_clock::now();
-        for (int i = 0; i < 1000; i++) {
-            this->joint_space_inertia_matrix();
-            // this->joint_space_nonlinear_effects();
-            // this->centroidal_momentum_corriolis();
-            // this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000.0<<std::endl;
+//
+//
+//        // tests
+//        std::cout<<"num_bodies: "<<num_bodies<<std::endl;
+//        std::cout<<"bodies.size(): "<<bodies.size()<<std::endl;
+//        std::cout<<"num_q: "<<num_q<<std::endl;
+//        std::cout<<"num_v: "<<num_v<<std::endl;
+//        std::cout<<"num_u: "<<num_u<<std::endl;
+//
+//        std::cout<<"FwdKinematics"<<std::endl;
+//        bodies[0].set_pos(Eigen::Matrix<myfloat,3,1>(0,0,100));
+//        bodies[1].set_pos(Eigen::Matrix<myfloat,4,1>(0.9387913,0.2397128, 0.2397128, 0.0612087));
+//        bodies[1].set_vel(Eigen::Matrix<myfloat,3,1>(1,0,0));
+//        bodies[6].set_vel(Eigen::Matrix<myfloat,1,1>(1.1));
+//        casadi::SX q = casadi::SX::sym("q");
+//        bodies[7].set_pos(Eigen::Matrix<myfloat,1,1>(q));
+//        bodies[left_hip_pitch_id].set_pos(Eigen::Matrix<myfloat,1,1>(0.1));
+//        // std::cout<<this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
+//
+//        // std::cout<<"Body Jacobian"<<std::endl;
+//        // std::cout<<this->spatial_body_jacobian(right_hip_yaw_id)<<std::endl;
+//
+//        // std::cout<<this->spatial_body_corriolis(left_toe_pitch_id)<<std::endl;
+//
+//
+//        // std::cout<< this->joint_space_inertia_matrix()<<std::endl;
+//        std::cout<< this->com_position() << std::endl;
+//        std::cout<<this->centroidal_momentum_corriolis();
+////        // time inertia matrix in microseconds
+////        auto start = std::chrono::high_resolution_clock::now();
+////        for (int i = 0; i < 1000; i++) {
+////            this->joint_space_inertia_matrix();
+////            // this->joint_space_nonlinear_effects();
+////            // this->centroidal_momentum_corriolis();
+////            // this->forward_kinematics( Pose(Eigen::Matrix<myfloat,3,1>({-60,0,-90}),Eigen::Matrix<myfloat,3,1>({0,-0.05456,-0.0315})),left_toe_roll_id);
+////        }
+////        auto end = std::chrono::high_resolution_clock::now();
+////        std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000.0<<std::endl;
 
 
     }
 
-    std::string ev2str(Eigen::Matrix<myfloat, -1, 1> vec, int precision){
-        // precision of 
-        std::stringstream ss;
-        ss << std::fixed << std::setprecision(precision) << vec.transpose();
-        return ss.str();
-    }
 
-    void print_state(int precision=2, int width=25) {
-        // pretty print all bodies with q and v fixed width
-        // body_name    q   v
-        std::cout<<std::setw(width)<<"body_name"<<std::setw(width)<<"q"<<std::setw(width)<<"v"<<std::endl;
-        for (int i = 0; i < bodies.size(); i++) {
-            std::cout<<std::setw(width)<<bodies[i].name<<std::setw(width)<<ev2str(bodies[i].joint.q,precision)<<std::setw(width)<<ev2str(bodies[i].joint.v,precision)<<std::endl;
-        }
-
-    }
 
     
 

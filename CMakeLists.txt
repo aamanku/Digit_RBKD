@@ -20,6 +20,11 @@ add_executable(Digit_RBKD src/main.cpp)
 target_link_libraries(Digit_RBKD Eigen3::Eigen casadi)
 
 ###  Testing  ###
+add_executable(digit_model_test src/test/digit_model.cpp)
+target_link_libraries(digit_model_test Eigen3::Eigen casadi)
+add_test(NAME digit_model_test COMMAND digit_model_test)
+
+###
 add_executable(casadi_symbolic_eigen src/test/casadi_symbolic_eigen.cpp)
 target_link_libraries(casadi_symbolic_eigen Eigen3::Eigen casadi)
 add_test(NAME casadi_symbolic_eigen COMMAND casadi_symbolic_eigen)

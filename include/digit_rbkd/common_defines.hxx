@@ -23,9 +23,8 @@ SOFTWARE.
 */
 #ifndef COMMON_DEFINES_HXX
 #define COMMON_DEFINES_HXX
-#include <eigen3/Eigen/Dense>
 #include <casadi/casadi.hpp>
-
+#include <Eigen/Core>
 #define DEBUG 1
 #define MYINF 1e15
 
@@ -37,98 +36,128 @@ SOFTWARE.
 //        return x;
 //    }
 //}
-//
-//namespace Eigen
-//{
-//    template<> struct NumTraits<casadi::SX>
-//    {
-//        using Real = casadi::SX;
-//        using NonInteger = casadi::SX;
-//        using Literal = casadi::SX;
-//        using Nested = casadi::SX;
-//
-//        static bool constexpr IsComplex = false;
-//        static bool constexpr IsInteger = false;
-//        static int constexpr ReadCost = 1;
-//        static int constexpr AddCost = 1;
-//        static int constexpr MulCost = 1;
-//        static bool constexpr IsSigned = true;
-//        static bool constexpr RequireInitialization = true;
-//
-//
-//        static double epsilon()
-//        {
-//            return std::numeric_limits<double>::epsilon();
-//        }
-//
-//
-//        static double dummy_precision()
-//        {
-//            return 1e-10;
-//        }
-//
-//
-//        static double hightest()
-//        {
-//            return std::numeric_limits<double>::max();
-//        }
-//
-//
-//        static double lowest()
-//        {
-//            return std::numeric_limits<double>::min();
-//        }
-//
-//
-//        static int digits10()
-//        {
-//            return std::numeric_limits<double>::digits10;
-//        }
-//    };
-//};
-//namespace casadi
-//{
-//    // Copy casadi matrix to Eigen matrix
-//    template<typename MT, typename Scalar>
-//    inline void copy(::casadi::Matrix<Scalar> const & src,
-//                     Eigen::MatrixBase<MT> & dst)
-//    {
-//        Eigen::DenseIndex const m = src.size1();
-//        Eigen::DenseIndex const n = src.size2();
-//
-//        dst.resize(m, n);
-//
-//        for (Eigen::DenseIndex i = 0; i < m; ++i)
-//            for (Eigen::DenseIndex j = 0; j < n; ++j)
-//                dst(i, j) = src(i, j);
-//    }
-//
-//
-//    // Copy Eigen matrix to casadi matrix
-//    template<typename MT, typename Scalar>
-//    inline void copy(Eigen::MatrixBase<MT> const & src,
-//                     ::casadi::Matrix<Scalar> & dst)
-//    {
-//        Eigen::DenseIndex const m = src.rows();
-//        Eigen::DenseIndex const n = src.cols();
-//
-//        dst.resize(m, n);
-//
-//        for (Eigen::DenseIndex i = 0; i < m; ++i)
-//            for (Eigen::DenseIndex j = 0; j < n; ++j)
-//                dst(i, j) = src(i, j);
-//    }
-//
-//} // namespace casadi
-//
-//
+
+
+namespace Eigen
+{
+    namespace internal
+    {
+        // Specialization of Eigen::internal::cast_impl for Casadi input types
+        template<typename Scalar>
+        struct cast_impl<casadi::SX,Scalar>
+        {
+#if EIGEN_VERSION_AT_LEAST(3,2,90)
+            EIGEN_DEVICE_FUNC
+#endif
+            static inline Scalar run(const casadi::SX & x)
+            {
+                return static_cast<Scalar>(x);
+            }
+        };
+
+#if EIGEN_VERSION_AT_LEAST(3,2,90) && !EIGEN_VERSION_AT_LEAST(3,2,93)
+        template<typename Scalar, bool IsInteger>
+    struct significant_decimals_default_impl< ::casadi::Matrix<Scalar>,IsInteger>
+    {
+      static inline int run()
+      {
+        return std::numeric_limits<Scalar>::digits10;
+      }
+    };
+#endif
+    }
+}
+
+namespace Eigen
+{
+    template<> struct NumTraits<casadi::SX>
+    {
+        using Real = casadi::SX;
+        using NonInteger = casadi::SX;
+        using Literal = casadi::SX;
+        using Nested = casadi::SX;
+
+        static bool constexpr IsComplex = false;
+        static bool constexpr IsInteger = false;
+        static int constexpr ReadCost = 1;
+        static int constexpr AddCost = 1;
+        static int constexpr MulCost = 1;
+        static bool constexpr IsSigned = true;
+        static bool constexpr RequireInitialization = true;
+
+
+        static double epsilon()
+        {
+            return std::numeric_limits<double>::epsilon();
+        }
+
+
+        static double dummy_precision()
+        {
+            return 1e-10;
+        }
+
+
+        static double hightest()
+        {
+            return std::numeric_limits<double>::max();
+        }
+
+
+        static double lowest()
+        {
+            return std::numeric_limits<double>::min();
+        }
+
+
+        static int digits10()
+        {
+            return std::numeric_limits<double>::digits10;
+        }
+    };
+};
+namespace casadi
+{
+    // Copy casadi matrix to Eigen matrix
+    template<typename MT, typename Scalar>
+    inline void copy(::casadi::Matrix<Scalar> const & src,
+                     Eigen::MatrixBase<MT> & dst)
+    {
+        Eigen::DenseIndex const m = src.size1();
+        Eigen::DenseIndex const n = src.size2();
+
+        dst.resize(m, n);
+
+        for (Eigen::DenseIndex i = 0; i < m; ++i)
+            for (Eigen::DenseIndex j = 0; j < n; ++j)
+                dst(i, j) = src(i, j);
+    }
+
+
+    // Copy Eigen matrix to casadi matrix
+    template<typename MT, typename Scalar>
+    inline void copy(Eigen::MatrixBase<MT> const & src,
+                     ::casadi::Matrix<Scalar> & dst)
+    {
+        Eigen::DenseIndex const m = src.rows();
+        Eigen::DenseIndex const n = src.cols();
+
+        dst.resize(m, n);
+
+        for (Eigen::DenseIndex i = 0; i < m; ++i)
+            for (Eigen::DenseIndex j = 0; j < n; ++j)
+                dst(i, j) = src(i, j);
+    }
+
+} // namespace casadi
+
 
 
 
 //using scalar = casadi::Matrix<casadi::SXElem>;
 
-//using myfloat = casadi::Matrix<casadi::SXElem>;
-using myfloat = double;
+using myfloat = casadi::Matrix<casadi::SXElem>;
+//using myfloat = double;
 using myint = int;
 
 using Vector3 = Eigen::Matrix<myfloat, 3, 1>;
@@ -170,6 +199,56 @@ const myint gc[9] = {0, 1, 1, 4, 3, 4, 7, 6, 6};
 #else
 #define PRINT(x)
 #endif
+
+// function to invert matrix. If scalar is casadi::SX then use following else use Eigen
+template<int nrows, int ncols,typename Scalar>
+Eigen::Matrix<Scalar,nrows,ncols> invertMatrix(const Eigen::Matrix<Scalar,nrows,ncols> &input)
+{
+    return input.inverse();
+}
+
+template<int nrows, int ncols>
+Eigen::Matrix<casadi::Matrix<casadi::SXElem>,nrows,ncols> invertMatrix(const Eigen::Matrix<casadi::Matrix<casadi::SXElem>,nrows,ncols> &input)
+{
+    const int nr = input.rows();
+    const int nc = input.cols();
+    assert(nr == nc && "Matrix should be square");
+    // convert Eigen matrix to casadi matrix
+    casadi::SX input_casadi = casadi::SX::zeros(nr,nc);
+    // copy input to input_casadi
+    for(int i=0; i<nr; i++)
+    {
+        for(int j=0; j<nc; j++)
+        {
+            input_casadi(i,j) = input(i,j);
+        }
+    }
+    // invert the matrix
+    casadi::SX output_casadi = casadi::SX::inv(input_casadi);
+    // convert casadi matrix to Eigen matrix
+
+    Eigen::Matrix<casadi::Matrix<casadi::SXElem>,nrows,ncols> output = input;
+
+    // copy output_casadi to output
+    for(int i=0; i<nr; i++)
+    {
+        for(int j=0; j<nc; j++)
+        {
+            output(i,j) = output_casadi(i,j);
+        }
+    }
+
+    return output;
+}
+
+std::string ev2str(Eigen::Matrix<myfloat, -1, 1> vec, int precision){
+    // precision of
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(precision) << vec.transpose();
+    return ss.str();
+}
+
+
 
 
 #endif // COMMON_DEFINES_HXX
