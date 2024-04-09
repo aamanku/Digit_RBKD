@@ -1,0 +1,218 @@
+\hypertarget{classRigidBodyTree}{}\doxysection{Rigid\+Body\+Tree Class Reference}
+\label{classRigidBodyTree}\index{RigidBodyTree@{RigidBodyTree}}
+
+
+Inheritance diagram for Rigid\+Body\+Tree\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classRigidBodyTree__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a9c2efdb7a4ad2f1aeecf4645d394d30c}\label{classRigidBodyTree_a9c2efdb7a4ad2f1aeecf4645d394d30c}} 
+void {\bfseries initialize} ()
+\item 
+void \mbox{\hyperlink{classRigidBodyTree_ab622d50313bcce9513cf95c20657f123}{print\+\_\+state}} (int precision=2, int width=25) const
+\begin{DoxyCompactList}\small\item\em Pretty print the state of the model. \end{DoxyCompactList}\item 
+std\+::vector$<$ myint $>$ \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}} (myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\begin{DoxyCompactList}\small\item\em Get vector of ids of all bodies between body\+\_\+id and parent\+\_\+body\+\_\+id. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRigidBodyTree_a2518bfecd18ed6c5d3858428a2a43b04}\label{classRigidBodyTree_a2518bfecd18ed6c5d3858428a2a43b04}} 
+std\+::vector$<$ myint $>$ {\bfseries branch\+\_\+dof} (std\+::vector$<$ myint $>$ \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}}) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a356dd5581b3382c4679f366ff9956c0b}\label{classRigidBodyTree_a356dd5581b3382c4679f366ff9956c0b}} 
+\mbox{\hyperlink{structrbda_1_1PluckerTransform}{Plucker\+Transform}} {\bfseries spatial\+\_\+body\+\_\+forward\+\_\+kinematics} (myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_adda3fd73a74f17476cd264d55bae01cd}\label{classRigidBodyTree_adda3fd73a74f17476cd264d55bae01cd}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries spatial\+\_\+body\+\_\+velocity} (myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a203e91a40438c2dd1dfc5f644e4ae675}\label{classRigidBodyTree_a203e91a40438c2dd1dfc5f644e4ae675}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, -\/1 $>$ {\bfseries spatial\+\_\+body\+\_\+jacobian} (myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a8ec9924d2657bda84aa2377bb00ab134}\label{classRigidBodyTree_a8ec9924d2657bda84aa2377bb00ab134}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, -\/1 $>$ {\bfseries jacobian} (\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} frame, myint body\+\_\+id, myint parrent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a3d3a9eb2060ab4dde7cb6bc879a4f629}\label{classRigidBodyTree_a3d3a9eb2060ab4dde7cb6bc879a4f629}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, -\/1 $>$ {\bfseries jacobian} (\mbox{\hyperlink{structSite}{Site}} site, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_abb7415174da0dd6dce32c2e3d1b44a07}\label{classRigidBodyTree_abb7415174da0dd6dce32c2e3d1b44a07}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, -\/1 $>$ {\bfseries jacobian} (myint site\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_aed20b97391da0473a87aea49dd0b382d}\label{classRigidBodyTree_aed20b97391da0473a87aea49dd0b382d}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries velocity} (\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} frame, myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a98410902032093a7658356d5f22b9306}\label{classRigidBodyTree_a98410902032093a7658356d5f22b9306}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries velocity} (\mbox{\hyperlink{structSite}{Site}} site, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ae0dce8d585cd0bdab52ad74210ccdd64}\label{classRigidBodyTree_ae0dce8d585cd0bdab52ad74210ccdd64}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries velocity} (myint site\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a2a3ed39875727d77113e47d4d2ebcde0}\label{classRigidBodyTree_a2a3ed39875727d77113e47d4d2ebcde0}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries spatial\+\_\+body\+\_\+corriolis} (myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_aef016d26322864b0331ddef388038362}\label{classRigidBodyTree_aef016d26322864b0331ddef388038362}} 
+\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} {\bfseries forward\+\_\+kinematics} (\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} frame, myint body\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a1e10b49ce4b70a3c5f16e7b054f3f73f}\label{classRigidBodyTree_a1e10b49ce4b70a3c5f16e7b054f3f73f}} 
+\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} {\bfseries forward\+\_\+kinematics} (\mbox{\hyperlink{structSite}{Site}} site, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ae652c54dbf55be883e183c2f64c9c91d}\label{classRigidBodyTree_ae652c54dbf55be883e183c2f64c9c91d}} 
+\mbox{\hyperlink{structrbda_1_1Pose}{Pose}} {\bfseries forward\+\_\+kinematics} (myint site\+\_\+id, myint parent\+\_\+body\+\_\+id=-\/1) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_adb99561875c69f3e8e8ed14723500ebe}\label{classRigidBodyTree_adb99561875c69f3e8e8ed14723500ebe}} 
+Eigen\+::\+Matrix$<$ myfloat, -\/1, -\/1 $>$ {\bfseries joint\+\_\+space\+\_\+inertia\+\_\+matrix} () const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a877699264932c959f79c65c708f210cf}\label{classRigidBodyTree_a877699264932c959f79c65c708f210cf}} 
+Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ {\bfseries joint\+\_\+space\+\_\+nonlinear\+\_\+effects} (bool include\+\_\+gravity=true) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a079da7f755afd46d20580a943db57c0b}\label{classRigidBodyTree_a079da7f755afd46d20580a943db57c0b}} 
+myfloat {\bfseries total\+\_\+mass} () const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_af3cf150d841d09c1d1b819ca31216620}\label{classRigidBodyTree_af3cf150d841d09c1d1b819ca31216620}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries com\+\_\+position} () const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a2f99bc57d76513fb3814891be1dd8a4e}\label{classRigidBodyTree_a2f99bc57d76513fb3814891be1dd8a4e}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, -\/1 $>$ {\bfseries centroidal\+\_\+momentum\+\_\+matrix} (Eigen\+::\+Matrix$<$ myfloat, -\/1, -\/1 $>$ H=Eigen\+::\+Matrix$<$ myfloat, -\/1, -\/1 $>$()) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_aa110daa929b4477eaef6a0e05c91ed25}\label{classRigidBodyTree_aa110daa929b4477eaef6a0e05c91ed25}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, 1 $>$ {\bfseries centroidal\+\_\+momentum\+\_\+corriolis} (Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ C\+\_\+terms=Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$()) const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_aaeb147ad46cc4038048d6554ec22bbf2}\label{classRigidBodyTree_aaeb147ad46cc4038048d6554ec22bbf2}} 
+Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ {\bfseries get\+\_\+qvec} () const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ae365ff1e1e8507125526c7a3c309a17f}\label{classRigidBodyTree_ae365ff1e1e8507125526c7a3c309a17f}} 
+Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ {\bfseries get\+\_\+vvec} () const
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a9440d5d5076c9c9a2762ba0aa3011941}\label{classRigidBodyTree_a9440d5d5076c9c9a2762ba0aa3011941}} 
+void {\bfseries set\+\_\+qpos} (const Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ \&q)
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ab6098449d75168fd36a590ef0332c386}\label{classRigidBodyTree_ab6098449d75168fd36a590ef0332c386}} 
+void {\bfseries set\+\_\+qvel} (const Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ \&v)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a23c599569a20cf69d96f7b224b90ebcf}\label{classRigidBodyTree_a23c599569a20cf69d96f7b224b90ebcf}} 
+std\+::string {\bfseries name}
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a067b36090df6f9153454200d9a4e3efe}\label{classRigidBodyTree_a067b36090df6f9153454200d9a4e3efe}} 
+myint {\bfseries num\+\_\+bodies} = -\/1
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a73a3ae561a4455ac8274093dd510a95c}\label{classRigidBodyTree_a73a3ae561a4455ac8274093dd510a95c}} 
+myint {\bfseries num\+\_\+sites} = 0
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_acc075212af57793a5fa4f7aedcac5f81}\label{classRigidBodyTree_acc075212af57793a5fa4f7aedcac5f81}} 
+myint {\bfseries num\+\_\+q} = 0
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a3418e941c9e25b33d79f58f7bead8cb9}\label{classRigidBodyTree_a3418e941c9e25b33d79f58f7bead8cb9}} 
+myint {\bfseries num\+\_\+v} = 0
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ad853b179378a4251e1b2f8f16dcde27d}\label{classRigidBodyTree_ad853b179378a4251e1b2f8f16dcde27d}} 
+myint {\bfseries num\+\_\+u} = 0
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_af0e6f01ecd1a71aad35ba20073b63b02}\label{classRigidBodyTree_af0e6f01ecd1a71aad35ba20073b63b02}} 
+std\+::vector$<$ \mbox{\hyperlink{structRigidBody}{Rigid\+Body}} $>$ {\bfseries bodies}
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_a4acbbdbc23c9933b73ff83f28803b608}\label{classRigidBodyTree_a4acbbdbc23c9933b73ff83f28803b608}} 
+std\+::vector$<$ \mbox{\hyperlink{structSite}{Site}} $>$ {\bfseries sites}
+\item 
+\mbox{\Hypertarget{classRigidBodyTree_ad5822d98bbe81bb2e6d9529bfd8428c3}\label{classRigidBodyTree_ad5822d98bbe81bb2e6d9529bfd8428c3}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries gravity} = Eigen\+::\+Matrix$<$myfloat, 3, 1$>$(0.\+0, 0.\+0, -\/9.\+81)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 167 of file rigid\+\_\+body.\+hxx.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}\label{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}} 
+\index{RigidBodyTree@{RigidBodyTree}!kappa@{kappa}}
+\index{kappa@{kappa}!RigidBodyTree@{RigidBodyTree}}
+\doxysubsubsection{\texorpdfstring{kappa()}{kappa()}}
+{\footnotesize\ttfamily std\+::vector$<$myint$>$ Rigid\+Body\+Tree\+::kappa (\begin{DoxyParamCaption}\item[{myint}]{body\+\_\+id,  }\item[{myint}]{parent\+\_\+body\+\_\+id = {\ttfamily -\/1} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get vector of ids of all bodies between body\+\_\+id and parent\+\_\+body\+\_\+id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em body\+\_\+id} & \\
+\hline
+{\em parent\+\_\+body\+\_\+id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$myint$>$ 
+\end{DoxyReturn}
+
+
+Definition at line 217 of file rigid\+\_\+body.\+hxx.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{218     \{}
+\DoxyCodeLine{219         std::vector<myint> \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}};}
+\DoxyCodeLine{220         \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}}.push\_back(body\_id);}
+\DoxyCodeLine{221         \textcolor{keywordflow}{if} (body\_id == parent\_body\_id) \textcolor{keywordflow}{return} \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}};}
+\DoxyCodeLine{222         \textcolor{comment}{// go up the tree}}
+\DoxyCodeLine{223         \textcolor{keywordflow}{while} (bodies[body\_id].parent != parent\_body\_id)}
+\DoxyCodeLine{224         \{}
+\DoxyCodeLine{225             body\_id = bodies[body\_id].parent;}
+\DoxyCodeLine{226             \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}}.push\_back(body\_id);}
+\DoxyCodeLine{227             \textcolor{keywordflow}{if} (body\_id == -\/1) \textcolor{keywordflow}{return} std::vector<myint>();}
+\DoxyCodeLine{228         \}}
+\DoxyCodeLine{229         \textcolor{comment}{// reverse the vector}}
+\DoxyCodeLine{230         std::reverse(\mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}}.begin(), \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}}.end());}
+\DoxyCodeLine{231         \textcolor{comment}{// return the kappa}}
+\DoxyCodeLine{232         \textcolor{keywordflow}{return} \mbox{\hyperlink{classRigidBodyTree_a6f8d17624f2208f859820220107e38c7}{kappa}};}
+\DoxyCodeLine{233     \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classRigidBodyTree_ab622d50313bcce9513cf95c20657f123}\label{classRigidBodyTree_ab622d50313bcce9513cf95c20657f123}} 
+\index{RigidBodyTree@{RigidBodyTree}!print\_state@{print\_state}}
+\index{print\_state@{print\_state}!RigidBodyTree@{RigidBodyTree}}
+\doxysubsubsection{\texorpdfstring{print\_state()}{print\_state()}}
+{\footnotesize\ttfamily void Rigid\+Body\+Tree\+::print\+\_\+state (\begin{DoxyParamCaption}\item[{int}]{precision = {\ttfamily 2},  }\item[{int}]{width = {\ttfamily 25} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Pretty print the state of the model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em precision} & \\
+\hline
+{\em width} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 198 of file rigid\+\_\+body.\+hxx.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{199     \{}
+\DoxyCodeLine{200         \textcolor{comment}{// pretty print all bodies with q and v fixed width}}
+\DoxyCodeLine{201         \textcolor{comment}{// body\_name    q   v}}
+\DoxyCodeLine{202         std::cout << std::setw(width) << \textcolor{stringliteral}{"{}body\_name"{}} << std::setw(width) << \textcolor{stringliteral}{"{}q"{}} << std::setw(width) << \textcolor{stringliteral}{"{}v"{}} << std::endl;}
+\DoxyCodeLine{203         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < bodies.size(); i++)}
+\DoxyCodeLine{204         \{}
+\DoxyCodeLine{205             std::cout << std::setw(width) << bodies[i].name << std::setw(width) << ev2str(bodies[i].joint.q, precision) << std::setw(width) << ev2str(bodies[i].joint.v, precision) << std::endl;}
+\DoxyCodeLine{206         \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/rigid\+\_\+body.\+hxx\end{DoxyCompactItemize}

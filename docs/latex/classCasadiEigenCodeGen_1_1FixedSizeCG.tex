@@ -1,0 +1,343 @@
+\hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG}{}\doxysection{Casadi\+Eigen\+Code\+Gen\+::Fixed\+Size\+CG Class Reference}
+\label{classCasadiEigenCodeGen_1_1FixedSizeCG}\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+
+
+The Helper class for code generation for eigen.  
+
+
+
+
+{\ttfamily \#include $<$Casadi\+Eigen\+Code\+Generator.\+hpp$>$}
+
+
+
+Inheritance diagram for Casadi\+Eigen\+Code\+Gen\+::Fixed\+Size\+CG\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classCasadiEigenCodeGen_1_1FixedSizeCG__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Casadi\+Eigen\+Code\+Gen\+::Fixed\+Size\+CG\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classCasadiEigenCodeGen_1_1FixedSizeCG__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_aff1b33c9ced9d8afaa711edba051f90e}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_aff1b33c9ced9d8afaa711edba051f90e}} 
+{\bfseries Fixed\+Size\+CG} (const std\+::string \&name, const std\+::string \&code\+\_\+gen\+\_\+dir, const Dict \&opts)
+\item 
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_a5ceb83d3f23282dfdb922cb575c30967}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_a5ceb83d3f23282dfdb922cb575c30967}} 
+void \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a5ceb83d3f23282dfdb922cb575c30967}{generate\+\_\+with\+\_\+eigen}} ()
+\begin{DoxyCompactList}\small\item\em Generates the code using the eigen code generator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a231eb6a8988d772214b1da10da750e54}{add\+\_\+casadi\+\_\+function}} (const Function \&f)
+\begin{DoxyCompactList}\small\item\em Adds a casadi function to the eigen code generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::pair$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$, std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a8e935b54482facd0d8435d79283d4e2b}{get\+\_\+casadi\+\_\+function\+\_\+io\+\_\+dims}} (const Function \&f, bool print=false)
+\begin{DoxyCompactList}\small\item\em Returns the pair of vectors of pairs containing input and output dimensions of the casadi function. \end{DoxyCompactList}\item 
+std\+::pair$<$ std\+::vector$<$ std\+::string $>$, std\+::vector$<$ std\+::string $>$ $>$ \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad8eedc1721c7dbbcd11e42e2da535281}{get\+\_\+casadi\+\_\+function\+\_\+io\+\_\+names}} (const Function \&f, bool print=false)
+\begin{DoxyCompactList}\small\item\em Returns pair of vectors containing input and output names of the casadi function. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad9ede083ec34620c077f7bbda656cc7a}{generate\+\_\+eigen\+\_\+function\+\_\+signature}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&argument\+\_\+dims, const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&result\+\_\+dims, const std\+::vector$<$ std\+::string $>$ \&argument\+\_\+names, const std\+::vector$<$ std\+::string $>$ \&result\+\_\+names, const std\+::string \&function\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Returns the Eigen function signature. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a887d050a3a08df259a5aabcdbac75c95}{generate\+\_\+eigen\+\_\+function\+\_\+source}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&argument\+\_\+dims, const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&result\+\_\+dims, const std\+::vector$<$ std\+::string $>$ \&argument\+\_\+names, const std\+::vector$<$ std\+::string $>$ \&result\+\_\+names, const std\+::string \&function\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Returns the Eigen function implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_a46b9dc3f7dd239832d6bc470501020b7}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_a46b9dc3f7dd239832d6bc470501020b7}} 
+std\+::string {\bfseries code\+\_\+gen\+\_\+dir}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The Helper class for code generation for eigen. 
+
+Definition at line 37 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_a231eb6a8988d772214b1da10da750e54}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_a231eb6a8988d772214b1da10da750e54}} 
+\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}!add\_casadi\_function@{add\_casadi\_function}}
+\index{add\_casadi\_function@{add\_casadi\_function}!CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+\doxysubsubsection{\texorpdfstring{add\_casadi\_function()}{add\_casadi\_function()}}
+{\footnotesize\ttfamily void Casadi\+Eigen\+Code\+Gen\+::\+Fixed\+Size\+CG\+::add\+\_\+casadi\+\_\+function (\begin{DoxyParamCaption}\item[{const Function \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a casadi function to the eigen code generator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & casadi function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 85 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{85                                                     \{}
+\DoxyCodeLine{86             \textcolor{comment}{// Add the function to the code generator}}
+\DoxyCodeLine{87             this-\/>add(f);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89             \textcolor{comment}{// Get argument dimensions and names}}
+\DoxyCodeLine{90             std::pair<std::vector<std::pair<int, int>>, std::vector<std::pair<int, int>>> dims = \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a8e935b54482facd0d8435d79283d4e2b}{get\_casadi\_function\_io\_dims}}(}
+\DoxyCodeLine{91                     f);}
+\DoxyCodeLine{92             std::pair<std::vector<std::string>, std::vector<std::string>> names = \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad8eedc1721c7dbbcd11e42e2da535281}{get\_casadi\_function\_io\_names}}(f);}
+\DoxyCodeLine{93             std::vector<std::pair<int, int>> argument\_dims = dims.first;}
+\DoxyCodeLine{94             std::vector<std::pair<int, int>> result\_dims = dims.second;}
+\DoxyCodeLine{95             std::vector<std::string> argument\_names = names.first;}
+\DoxyCodeLine{96             std::vector<std::string> result\_names = names.second;}
+\DoxyCodeLine{97             std::string function\_name = f.name();}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99             \textcolor{comment}{// Add the eigen function signature to the header}}
+\DoxyCodeLine{100             this-\/>declare(\mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad9ede083ec34620c077f7bbda656cc7a}{generate\_eigen\_function\_signature}}(argument\_dims, result\_dims, argument\_names, result\_names,}
+\DoxyCodeLine{101                                                             function\_name));}
+\DoxyCodeLine{102             \textcolor{comment}{// Add the eigen function implementation to the source}}
+\DoxyCodeLine{103             this-\/>body << \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a887d050a3a08df259a5aabcdbac75c95}{generate\_eigen\_function\_source}}(argument\_dims, result\_dims, argument\_names, result\_names,}
+\DoxyCodeLine{104                                                          function\_name);}
+\DoxyCodeLine{105         \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_ad9ede083ec34620c077f7bbda656cc7a}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_ad9ede083ec34620c077f7bbda656cc7a}} 
+\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}!generate\_eigen\_function\_signature@{generate\_eigen\_function\_signature}}
+\index{generate\_eigen\_function\_signature@{generate\_eigen\_function\_signature}!CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+\doxysubsubsection{\texorpdfstring{generate\_eigen\_function\_signature()}{generate\_eigen\_function\_signature()}}
+{\footnotesize\ttfamily std\+::string Casadi\+Eigen\+Code\+Gen\+::\+Fixed\+Size\+CG\+::generate\+\_\+eigen\+\_\+function\+\_\+signature (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&}]{argument\+\_\+dims,  }\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&}]{result\+\_\+dims,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{argument\+\_\+names,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{result\+\_\+names,  }\item[{const std\+::string \&}]{function\+\_\+name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Returns the Eigen function signature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument\+\_\+dims} & a pair of the form \{rows,cols\} for each argument \\
+\hline
+{\em result\+\_\+dims} & a pair of the form \{rows,cols\} for each result \\
+\hline
+{\em argument\+\_\+names} & a vector of argument names \\
+\hline
+{\em result\+\_\+names} & a vector of result names \\
+\hline
+{\em function\+\_\+name} & name of the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eigen function implementation 
+\end{DoxyReturn}
+
+
+Definition at line 180 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{184                                                                                       \{}
+\DoxyCodeLine{185             \textcolor{comment}{// create a void function signature}}
+\DoxyCodeLine{186             \textcolor{comment}{// with arguments as references to Eigen matrices with appropriate dimensions}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188             std::string \textcolor{keyword}{function} = \textcolor{stringliteral}{"{}void "{}} + function\_name + \textcolor{stringliteral}{"{}\_eigen("{}};}
+\DoxyCodeLine{189             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < argument\_dims.size(); ++i) \{}
+\DoxyCodeLine{190                 \textcolor{keywordflow}{if} (i != 0) \{}
+\DoxyCodeLine{191                     \textcolor{keyword}{function} += \textcolor{stringliteral}{"{}\(\backslash\)t\(\backslash\)t\(\backslash\)t\(\backslash\)t"{}};}
+\DoxyCodeLine{192                 \}}
+\DoxyCodeLine{193                 \textcolor{keyword}{function} += \textcolor{stringliteral}{"{}const Eigen::Matrix<casadi\_real,"{}} + std::to\_string(argument\_dims[i].first) + \textcolor{stringliteral}{"{},"{}} +}
+\DoxyCodeLine{194                             std::to\_string(argument\_dims[i].second) + \textcolor{stringliteral}{"{}> \&"{}} + argument\_names[i];}
+\DoxyCodeLine{195                 \textcolor{keyword}{function} += \textcolor{stringliteral}{"{},\(\backslash\)n"{}};}
+\DoxyCodeLine{196             \}}
+\DoxyCodeLine{197             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < result\_dims.size(); ++i) \{}
+\DoxyCodeLine{198                 \textcolor{keyword}{function} += \textcolor{stringliteral}{"{}\(\backslash\)t\(\backslash\)t\(\backslash\)t\(\backslash\)tEigen::Matrix<casadi\_real,"{}} + std::to\_string(result\_dims[i].first) + \textcolor{stringliteral}{"{},"{}} +}
+\DoxyCodeLine{199                             std::to\_string(result\_dims[i].second) + \textcolor{stringliteral}{"{}> \&"{}} + result\_names[i];}
+\DoxyCodeLine{200                 \textcolor{keywordflow}{if} (i < result\_dims.size() -\/ 1) \{}
+\DoxyCodeLine{201                     \textcolor{keyword}{function} += \textcolor{stringliteral}{"{}, \(\backslash\)n"{}};}
+\DoxyCodeLine{202                 \}}
+\DoxyCodeLine{203             \}}
+\DoxyCodeLine{204             \textcolor{keyword}{function} += \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206             \textcolor{keywordflow}{return} \textcolor{keyword}{function};}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208         \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_a887d050a3a08df259a5aabcdbac75c95}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_a887d050a3a08df259a5aabcdbac75c95}} 
+\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}!generate\_eigen\_function\_source@{generate\_eigen\_function\_source}}
+\index{generate\_eigen\_function\_source@{generate\_eigen\_function\_source}!CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+\doxysubsubsection{\texorpdfstring{generate\_eigen\_function\_source()}{generate\_eigen\_function\_source()}}
+{\footnotesize\ttfamily std\+::string Casadi\+Eigen\+Code\+Gen\+::\+Fixed\+Size\+CG\+::generate\+\_\+eigen\+\_\+function\+\_\+source (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&}]{argument\+\_\+dims,  }\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ \&}]{result\+\_\+dims,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{argument\+\_\+names,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{result\+\_\+names,  }\item[{const std\+::string \&}]{function\+\_\+name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Returns the Eigen function implementation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument\+\_\+dims} & a pair of the form \{rows,cols\} for each argument \\
+\hline
+{\em result\+\_\+dims} & a pair of the form \{rows,cols\} for each result \\
+\hline
+{\em argument\+\_\+names} & a vector of argument names \\
+\hline
+{\em result\+\_\+names} & a vector of result names \\
+\hline
+{\em function\+\_\+name} & name of the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eigen function implementation 
+\end{DoxyReturn}
+
+
+Definition at line 218 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{222                                                                                    \{}
+\DoxyCodeLine{223             \textcolor{comment}{// create a void function implementation}}
+\DoxyCodeLine{224             std::string source = \textcolor{stringliteral}{"{}extern \(\backslash\)"{}C\(\backslash\)"{} CASADI\_SYMBOL\_EXPORT "{}};}
+\DoxyCodeLine{225             source += \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad9ede083ec34620c077f7bbda656cc7a}{generate\_eigen\_function\_signature}}(argument\_dims,}
+\DoxyCodeLine{226                                                         result\_dims,}
+\DoxyCodeLine{227                                                         argument\_names,}
+\DoxyCodeLine{228                                                         result\_names,}
+\DoxyCodeLine{229                                                         function\_name);}
+\DoxyCodeLine{230             source += \textcolor{stringliteral}{"{} \{\(\backslash\)n"{}};}
+\DoxyCodeLine{231             source += \textcolor{stringliteral}{"{}// create arguments for generated casadi function\(\backslash\)n"{}};}
+\DoxyCodeLine{232             source += \textcolor{stringliteral}{"{}const casadi\_real *arg[] = \{"{}};}
+\DoxyCodeLine{233             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < argument\_names.size(); ++i) \{}
+\DoxyCodeLine{234                 source += argument\_names[i] + \textcolor{stringliteral}{"{}.data()"{}};}
+\DoxyCodeLine{235                 \textcolor{keywordflow}{if} (i < argument\_names.size() -\/ 1) \{}
+\DoxyCodeLine{236                     source += \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{237                 \}}
+\DoxyCodeLine{238             \}}
+\DoxyCodeLine{239             source += \textcolor{stringliteral}{"{}\};\(\backslash\)n"{}};}
+\DoxyCodeLine{240             source += \textcolor{stringliteral}{"{}// create results for generated casadi function\(\backslash\)n"{}};}
+\DoxyCodeLine{241             source += \textcolor{stringliteral}{"{}casadi\_real *res[] = \{"{}};}
+\DoxyCodeLine{242             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < result\_names.size(); ++i) \{}
+\DoxyCodeLine{243                 source += result\_names[i] + \textcolor{stringliteral}{"{}.data()"{}};}
+\DoxyCodeLine{244                 \textcolor{keywordflow}{if} (i < result\_names.size() -\/ 1) \{}
+\DoxyCodeLine{245                     source += \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{246                 \}}
+\DoxyCodeLine{247             \}}
+\DoxyCodeLine{248             source += \textcolor{stringliteral}{"{}\};\(\backslash\)n"{}};}
+\DoxyCodeLine{249             source += \textcolor{stringliteral}{"{}// call the generated casadi function\(\backslash\)n"{}};}
+\DoxyCodeLine{250             source += function\_name + \textcolor{stringliteral}{"{}(arg, res, nullptr, nullptr, 0);\(\backslash\)n"{}};}
+\DoxyCodeLine{251             source += \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}};}
+\DoxyCodeLine{252             \textcolor{keywordflow}{return} source;}
+\DoxyCodeLine{253         \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_a8e935b54482facd0d8435d79283d4e2b}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_a8e935b54482facd0d8435d79283d4e2b}} 
+\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}!get\_casadi\_function\_io\_dims@{get\_casadi\_function\_io\_dims}}
+\index{get\_casadi\_function\_io\_dims@{get\_casadi\_function\_io\_dims}!CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+\doxysubsubsection{\texorpdfstring{get\_casadi\_function\_io\_dims()}{get\_casadi\_function\_io\_dims()}}
+{\footnotesize\ttfamily std\+::pair$<$std\+::vector$<$std\+::pair$<$int, int$>$ $>$, std\+::vector$<$std\+::pair$<$int, int$>$ $>$ $>$ Casadi\+Eigen\+Code\+Gen\+::\+Fixed\+Size\+CG\+::get\+\_\+casadi\+\_\+function\+\_\+io\+\_\+dims (\begin{DoxyParamCaption}\item[{const Function \&}]{f,  }\item[{bool}]{print = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Returns the pair of vectors of pairs containing input and output dimensions of the casadi function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & casadi function \\
+\hline
+{\em print} & if true, prints the input and output dimensions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{\mbox{[}\{rows\+:cols\},\{rows\+:cols\}....\mbox{]} \+: \mbox{[}\{rows\+:cols\},\{rows\+:cols\}....\mbox{]}\} 
+\end{DoxyReturn}
+
+
+Definition at line 118 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{118                                                                            \{}
+\DoxyCodeLine{119             \textcolor{keyword}{const} casadi\_int num\_args = f.sz\_arg();}
+\DoxyCodeLine{120             \textcolor{keyword}{const} casadi\_int num\_res = f.sz\_res();}
+\DoxyCodeLine{121             std::vector<std::pair<int, int>> in\_dims;}
+\DoxyCodeLine{122             std::vector<std::pair<int, int>> res\_dims;}
+\DoxyCodeLine{123             \textcolor{keywordflow}{for} (casadi\_int i = 0; i < num\_args; ++i) \{}
+\DoxyCodeLine{124                 in\_dims.push\_back(\{f.sparsity\_in(i).rows(), f.sparsity\_in(i).columns()\});}
+\DoxyCodeLine{125             \}}
+\DoxyCodeLine{126             \textcolor{keywordflow}{for} (casadi\_int i = 0; i < num\_res; ++i) \{}
+\DoxyCodeLine{127                 res\_dims.push\_back(\{f.sparsity\_out(i).rows(), f.sparsity\_out(i).columns()\});}
+\DoxyCodeLine{128             \}}
+\DoxyCodeLine{129             \textcolor{keywordflow}{if} (print) \{}
+\DoxyCodeLine{130                 std::cout << \textcolor{stringliteral}{"{}Input dimensions: "{}} << std::endl;}
+\DoxyCodeLine{131                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&in\_dim: in\_dims) \{}
+\DoxyCodeLine{132                     std::cout << in\_dim.first << \textcolor{stringliteral}{"{}x"{}} << in\_dim.second << std::endl;}
+\DoxyCodeLine{133                 \}}
+\DoxyCodeLine{134                 std::cout << \textcolor{stringliteral}{"{}Output dimensions: "{}} << std::endl;}
+\DoxyCodeLine{135                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&res\_dim: res\_dims) \{}
+\DoxyCodeLine{136                     std::cout << res\_dim.first << \textcolor{stringliteral}{"{}x"{}} << res\_dim.second << std::endl;}
+\DoxyCodeLine{137                 \}}
+\DoxyCodeLine{138             \}}
+\DoxyCodeLine{139             \textcolor{keywordflow}{return} \{in\_dims, res\_dims\};}
+\DoxyCodeLine{140         \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1FixedSizeCG_ad8eedc1721c7dbbcd11e42e2da535281}\label{classCasadiEigenCodeGen_1_1FixedSizeCG_ad8eedc1721c7dbbcd11e42e2da535281}} 
+\index{CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}!get\_casadi\_function\_io\_names@{get\_casadi\_function\_io\_names}}
+\index{get\_casadi\_function\_io\_names@{get\_casadi\_function\_io\_names}!CasadiEigenCodeGen::FixedSizeCG@{CasadiEigenCodeGen::FixedSizeCG}}
+\doxysubsubsection{\texorpdfstring{get\_casadi\_function\_io\_names()}{get\_casadi\_function\_io\_names()}}
+{\footnotesize\ttfamily std\+::pair$<$std\+::vector$<$std\+::string$>$, std\+::vector$<$std\+::string$>$ $>$ Casadi\+Eigen\+Code\+Gen\+::\+Fixed\+Size\+CG\+::get\+\_\+casadi\+\_\+function\+\_\+io\+\_\+names (\begin{DoxyParamCaption}\item[{const Function \&}]{f,  }\item[{bool}]{print = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Returns pair of vectors containing input and output names of the casadi function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & casadi function \\
+\hline
+{\em print} & if true, prints the input and output names \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pair of vectors containing input and output names 
+\end{DoxyReturn}
+
+
+Definition at line 148 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{148                                                                             \{}
+\DoxyCodeLine{149             \textcolor{keyword}{const} casadi\_int num\_args = f.sz\_arg();}
+\DoxyCodeLine{150             \textcolor{keyword}{const} casadi\_int num\_res = f.sz\_res();}
+\DoxyCodeLine{151             std::vector<std::string> in\_names;}
+\DoxyCodeLine{152             std::vector<std::string> res\_names;}
+\DoxyCodeLine{153             \textcolor{keywordflow}{for} (casadi\_int i = 0; i < num\_args; ++i) \{}
+\DoxyCodeLine{154                 in\_names.push\_back(f.name\_in(i));}
+\DoxyCodeLine{155             \}}
+\DoxyCodeLine{156             \textcolor{keywordflow}{for} (casadi\_int i = 0; i < num\_res; ++i) \{}
+\DoxyCodeLine{157                 res\_names.push\_back(f.name\_out(i));}
+\DoxyCodeLine{158             \}}
+\DoxyCodeLine{159             \textcolor{keywordflow}{if} (print) \{}
+\DoxyCodeLine{160                 std::cout << \textcolor{stringliteral}{"{}Input names: "{}} << std::endl;}
+\DoxyCodeLine{161                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&in\_name: in\_names) \{}
+\DoxyCodeLine{162                     std::cout << in\_name << std::endl;}
+\DoxyCodeLine{163                 \}}
+\DoxyCodeLine{164                 std::cout << \textcolor{stringliteral}{"{}Output names: "{}} << std::endl;}
+\DoxyCodeLine{165                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&res\_name: res\_names) \{}
+\DoxyCodeLine{166                     std::cout << res\_name << std::endl;}
+\DoxyCodeLine{167                 \}}
+\DoxyCodeLine{168             \}}
+\DoxyCodeLine{169             \textcolor{keywordflow}{return} \{in\_names, res\_names\};}
+\DoxyCodeLine{170         \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/Casadi\+Eigen\+Code\+Generator.\+hpp\end{DoxyCompactItemize}

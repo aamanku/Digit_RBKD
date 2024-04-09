@@ -1,0 +1,86 @@
+\hypertarget{classCasadiEigenCodeGen_1_1DynamicSizeCG}{}\doxysection{Casadi\+Eigen\+Code\+Gen\+::Dynamic\+Size\+CG Class Reference}
+\label{classCasadiEigenCodeGen_1_1DynamicSizeCG}\index{CasadiEigenCodeGen::DynamicSizeCG@{CasadiEigenCodeGen::DynamicSizeCG}}
+
+
+Inheritance diagram for Casadi\+Eigen\+Code\+Gen\+::Dynamic\+Size\+CG\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classCasadiEigenCodeGen_1_1DynamicSizeCG__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Casadi\+Eigen\+Code\+Gen\+::Dynamic\+Size\+CG\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classCasadiEigenCodeGen_1_1DynamicSizeCG__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1DynamicSizeCG_ab4b348078c3915dafc4dbc7d4f3e1bfd}\label{classCasadiEigenCodeGen_1_1DynamicSizeCG_ab4b348078c3915dafc4dbc7d4f3e1bfd}} 
+{\bfseries Dynamic\+Size\+CG} (const std\+::string \&name, const std\+::string \&code\+\_\+gen\+\_\+dir, const Dict \&opts)
+\item 
+void \mbox{\hyperlink{classCasadiEigenCodeGen_1_1DynamicSizeCG_a2d2a40f870f9780acb700fc632111439}{add\+\_\+casadi\+\_\+function}} (const Function \&f)
+\begin{DoxyCompactList}\small\item\em Adds a casadi function to the eigen code generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 257 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCasadiEigenCodeGen_1_1DynamicSizeCG_a2d2a40f870f9780acb700fc632111439}\label{classCasadiEigenCodeGen_1_1DynamicSizeCG_a2d2a40f870f9780acb700fc632111439}} 
+\index{CasadiEigenCodeGen::DynamicSizeCG@{CasadiEigenCodeGen::DynamicSizeCG}!add\_casadi\_function@{add\_casadi\_function}}
+\index{add\_casadi\_function@{add\_casadi\_function}!CasadiEigenCodeGen::DynamicSizeCG@{CasadiEigenCodeGen::DynamicSizeCG}}
+\doxysubsubsection{\texorpdfstring{add\_casadi\_function()}{add\_casadi\_function()}}
+{\footnotesize\ttfamily void Casadi\+Eigen\+Code\+Gen\+::\+Dynamic\+Size\+CG\+::add\+\_\+casadi\+\_\+function (\begin{DoxyParamCaption}\item[{const Function \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a casadi function to the eigen code generator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & casadi function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 267 of file Casadi\+Eigen\+Code\+Generator.\+hpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{267                                                     \{}
+\DoxyCodeLine{268             \textcolor{comment}{// Add the function to the code generator}}
+\DoxyCodeLine{269             this-\/>add(f);}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271             \textcolor{comment}{// Get argument dimensions and names}}
+\DoxyCodeLine{272             std::pair<std::vector<std::pair<int, int>>, std::vector<std::pair<int, int>>> dims = \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_a8e935b54482facd0d8435d79283d4e2b}{get\_casadi\_function\_io\_dims}}(}
+\DoxyCodeLine{273                     f);}
+\DoxyCodeLine{274             std::pair<std::vector<std::string>, std::vector<std::string>> names = \mbox{\hyperlink{classCasadiEigenCodeGen_1_1FixedSizeCG_ad8eedc1721c7dbbcd11e42e2da535281}{get\_casadi\_function\_io\_names}}(f);}
+\DoxyCodeLine{275             std::vector<std::pair<int, int>> argument\_dims = dims.first;}
+\DoxyCodeLine{276             std::vector<std::pair<int, int>> result\_dims = dims.second;}
+\DoxyCodeLine{277             std::vector<std::string> argument\_names = names.first;}
+\DoxyCodeLine{278             std::vector<std::string> result\_names = names.second;}
+\DoxyCodeLine{279             std::string function\_name = f.name();}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281             \textcolor{comment}{// Add the eigen function signature to the header}}
+\DoxyCodeLine{282             this-\/>declare(generate\_eigen\_function\_signature(argument\_names, result\_names, function\_name));}
+\DoxyCodeLine{283             \textcolor{comment}{// Add the eigen function implementation to the source}}
+\DoxyCodeLine{284             this-\/>body << generate\_eigen\_function\_source(argument\_names, result\_names, function\_name);}
+\DoxyCodeLine{285         \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/Casadi\+Eigen\+Code\+Generator.\+hpp\end{DoxyCompactItemize}

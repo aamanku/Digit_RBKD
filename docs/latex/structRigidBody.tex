@@ -1,0 +1,71 @@
+\hypertarget{structRigidBody}{}\doxysection{Rigid\+Body Struct Reference}
+\label{structRigidBody}\index{RigidBody@{RigidBody}}
+
+
+Collaboration diagram for Rigid\+Body\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structRigidBody__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structRigidBody_a0437849f21ae9d26fc7eb54e9a7e1603}\label{structRigidBody_a0437849f21ae9d26fc7eb54e9a7e1603}} 
+void \mbox{\hyperlink{structRigidBody_a0437849f21ae9d26fc7eb54e9a7e1603}{calculate\+\_\+\+Xjtree}} ()
+\begin{DoxyCompactList}\small\item\em Returns X transform matrix after joint position q is applied. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structRigidBody_a2d7606f7a31f8d4641e12118ae5e99d4}\label{structRigidBody_a2d7606f7a31f8d4641e12118ae5e99d4}} 
+void {\bfseries set\+\_\+state} (Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ q, Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ v)
+\item 
+\mbox{\Hypertarget{structRigidBody_ae76a6ad4cefad53244b1717292ab58e0}\label{structRigidBody_ae76a6ad4cefad53244b1717292ab58e0}} 
+void {\bfseries set\+\_\+pos} (Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ q)
+\item 
+\mbox{\Hypertarget{structRigidBody_ad774bf123dc13ed54333527470e17994}\label{structRigidBody_ad774bf123dc13ed54333527470e17994}} 
+void {\bfseries set\+\_\+vel} (Eigen\+::\+Matrix$<$ myfloat, -\/1, 1 $>$ v)
+\item 
+\mbox{\Hypertarget{structRigidBody_a0a4d838d3374c6e36273a26787e76619}\label{structRigidBody_a0a4d838d3374c6e36273a26787e76619}} 
+void {\bfseries set\+\_\+u} (myfloat u)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structRigidBody_ad44749f9417eaaf703bbde2c8b5f20c9}\label{structRigidBody_ad44749f9417eaaf703bbde2c8b5f20c9}} 
+std\+::string {\bfseries name}
+\item 
+\mbox{\Hypertarget{structRigidBody_aa1748533b0555784de1adc6104407a44}\label{structRigidBody_aa1748533b0555784de1adc6104407a44}} 
+myint {\bfseries parent}
+\item 
+\mbox{\Hypertarget{structRigidBody_a6d35e921bc223c526a70fe02636cd0d4}\label{structRigidBody_a6d35e921bc223c526a70fe02636cd0d4}} 
+myint {\bfseries id}
+\item 
+\mbox{\Hypertarget{structRigidBody_ab715d7e67958e2fb631ecbb25c31c76c}\label{structRigidBody_ab715d7e67958e2fb631ecbb25c31c76c}} 
+\mbox{\hyperlink{structJoint}{Joint}} {\bfseries joint}
+\item 
+\mbox{\Hypertarget{structRigidBody_aa7b882c681608307df26590b62443129}\label{structRigidBody_aa7b882c681608307df26590b62443129}} 
+\mbox{\hyperlink{structrbda_1_1PluckerTransform}{Plucker\+Transform}} {\bfseries Xtree}
+\item 
+\mbox{\Hypertarget{structRigidBody_ab7918c9807fa12b17b1ec7d87f0573ea}\label{structRigidBody_ab7918c9807fa12b17b1ec7d87f0573ea}} 
+\mbox{\hyperlink{structrbda_1_1PluckerTransform}{Plucker\+Transform}} {\bfseries Xjtree}
+\item 
+\mbox{\Hypertarget{structRigidBody_a690aa64d3a601843f184cda43f1a4003}\label{structRigidBody_a690aa64d3a601843f184cda43f1a4003}} 
+\mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} {\bfseries spI}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structRigidBody_a8b6b719dba5fcdbab421c14547950edc}\label{structRigidBody_a8b6b719dba5fcdbab421c14547950edc}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{structRigidBody}{Rigid\+Body}} \&rb)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 85 of file rigid\+\_\+body.\+hxx.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/rigid\+\_\+body.\+hxx\end{DoxyCompactItemize}

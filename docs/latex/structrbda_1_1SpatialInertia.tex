@@ -1,0 +1,68 @@
+\hypertarget{structrbda_1_1SpatialInertia}{}\doxysection{rbda\+::Spatial\+Inertia Struct Reference}
+\label{structrbda_1_1SpatialInertia}\index{rbda::SpatialInertia@{rbda::SpatialInertia}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_ac89984ce8df615d99f85cc3df685d161}\label{structrbda_1_1SpatialInertia_ac89984ce8df615d99f85cc3df685d161}} 
+{\bfseries Spatial\+Inertia} (myfloat m, Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ c, Eigen\+::\+Matrix$<$ myfloat, 3, 3 $>$ Ic)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a2796ddae476ca67fb16ace2240bfd7c2}\label{structrbda_1_1SpatialInertia_a2796ddae476ca67fb16ace2240bfd7c2}} 
+{\bfseries Spatial\+Inertia} (myfloat m, Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ c, Eigen\+::\+Matrix$<$ myfloat, 6, 1 $>$ Ic)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_ac7ba451264ac1fce6a5ffd2936fcb42e}\label{structrbda_1_1SpatialInertia_ac7ba451264ac1fce6a5ffd2936fcb42e}} 
+{\bfseries Spatial\+Inertia} (Eigen\+::\+Matrix$<$ myfloat, 6, 6 $>$ mat)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a3804fb40ca644ebbc34bea5ff9d9525e}\label{structrbda_1_1SpatialInertia_a3804fb40ca644ebbc34bea5ff9d9525e}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, 6 $>$ {\bfseries to\+Matrix} () const
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_acd7e227cf55ffbed184cc6f7971f6efb}\label{structrbda_1_1SpatialInertia_acd7e227cf55ffbed184cc6f7971f6efb}} 
+\mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} {\bfseries apply} (\mbox{\hyperlink{structrbda_1_1PluckerTransform}{Plucker\+Transform}} X) const
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a861429892774d0b6db243306c53f7cde}\label{structrbda_1_1SpatialInertia_a861429892774d0b6db243306c53f7cde}} 
+\mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} {\bfseries inv\+Apply} (\mbox{\hyperlink{structrbda_1_1PluckerTransform}{Plucker\+Transform}} X) const
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_ac79773cb51a3baccf3a08350a7cb7aeb}\label{structrbda_1_1SpatialInertia_ac79773cb51a3baccf3a08350a7cb7aeb}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries com\+\_\+pos} () const
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a2efa009e4edd5cf8fdd35931ed74b035}\label{structrbda_1_1SpatialInertia_a2efa009e4edd5cf8fdd35931ed74b035}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 3 $>$ {\bfseries com\+\_\+inertia} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_af74dc1150d8a5f53cbb1ae1d751bc1ec}\label{structrbda_1_1SpatialInertia_af74dc1150d8a5f53cbb1ae1d751bc1ec}} 
+myfloat {\bfseries m}
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a561eee8b05c29e840204466afeb0a205}\label{structrbda_1_1SpatialInertia_a561eee8b05c29e840204466afeb0a205}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries h}
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_abbe846141547cc3aab94336bfb7ba2e8}\label{structrbda_1_1SpatialInertia_abbe846141547cc3aab94336bfb7ba2e8}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 3 $>$ {\bfseries I}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_ab9d1d49c3d8540403dfbcd5860c06adc}\label{structrbda_1_1SpatialInertia_ab9d1d49c3d8540403dfbcd5860c06adc}} 
+\mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} {\bfseries operator+} (const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&lhs, const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_aee984aca17d2226c302fb8248b8dbe0b}\label{structrbda_1_1SpatialInertia_aee984aca17d2226c302fb8248b8dbe0b}} 
+\mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} {\bfseries operator-\/} (const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&lhs, const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a544a5b01de184ac30ab24e85e8c86888}\label{structrbda_1_1SpatialInertia_a544a5b01de184ac30ab24e85e8c86888}} 
+\mbox{\hyperlink{structrbda_1_1ForceVector}{Force\+Vector}} {\bfseries operator$\ast$} (const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&lhs, const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1SpatialInertia_a8d69fc46649633384a9a004984b6fdf8}\label{structrbda_1_1SpatialInertia_a8d69fc46649633384a9a004984b6fdf8}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{structrbda_1_1SpatialInertia}{Spatial\+Inertia}} \&spI)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 336 of file data\+\_\+structures.\+hxx.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/rbda/data\+\_\+structures.\+hxx\end{DoxyCompactItemize}

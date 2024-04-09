@@ -1,0 +1,6 @@
+<map id="RigidBody" name="RigidBody">
+<area shape="rect" id="node1" title=" " alt="" coords="157,109,245,136"/>
+<area shape="rect" id="node2" href="$structrbda_1_1SpatialInertia.html" title=" " alt="" coords="5,5,152,32"/>
+<area shape="rect" id="node3" href="$structJoint.html" title=" " alt="" coords="176,5,227,32"/>
+<area shape="rect" id="node4" href="$structrbda_1_1PluckerTransform.html" title=" " alt="" coords="251,5,421,32"/>
+</map>

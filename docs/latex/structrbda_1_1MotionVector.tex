@@ -1,0 +1,65 @@
+\hypertarget{structrbda_1_1MotionVector}{}\doxysection{rbda\+::Motion\+Vector Struct Reference}
+\label{structrbda_1_1MotionVector}\index{rbda::MotionVector@{rbda::MotionVector}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_aaa3877762606e87df7908faca5369845}\label{structrbda_1_1MotionVector_aaa3877762606e87df7908faca5369845}} 
+{\bfseries Motion\+Vector} (Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ omega, Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ v)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_af605d4d9d9145fb5d6f0634efd8b6357}\label{structrbda_1_1MotionVector_af605d4d9d9145fb5d6f0634efd8b6357}} 
+{\bfseries Motion\+Vector} (Eigen\+::\+Matrix$<$ myfloat, 6, 1 $>$ mv)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a390edb730389c0e43b1854cef4424581}\label{structrbda_1_1MotionVector_a390edb730389c0e43b1854cef4424581}} 
+{\bfseries Motion\+Vector} (Eigen\+::\+Matrix$<$ myfloat, 6,-\/1 $>$ mv)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a0b2b21cd76a068f685df4a314ee402ae}\label{structrbda_1_1MotionVector_a0b2b21cd76a068f685df4a314ee402ae}} 
+Eigen\+::\+Matrix$<$ myfloat, 6, 1 $>$ {\bfseries to\+Vector} () const
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a659e7d59ba3e26c05886f93c72c09b67}\label{structrbda_1_1MotionVector_a659e7d59ba3e26c05886f93c72c09b67}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \& {\bfseries operator=} (const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a4f51a5e0061bdd5b0a7c0c0ed1d276a2}\label{structrbda_1_1MotionVector_a4f51a5e0061bdd5b0a7c0c0ed1d276a2}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries cross} (const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs) const
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a369c4f71f6d56ca88fa5b9cac3bc71d8}\label{structrbda_1_1MotionVector_a369c4f71f6d56ca88fa5b9cac3bc71d8}} 
+\mbox{\hyperlink{structrbda_1_1ForceVector}{Force\+Vector}} {\bfseries cross} (const \mbox{\hyperlink{structrbda_1_1ForceVector}{Force\+Vector}} \&rhs) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_ab5c5a429ca166658a7a83ea77b27c21b}\label{structrbda_1_1MotionVector_ab5c5a429ca166658a7a83ea77b27c21b}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries omega}
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a49499e862ac451f34f248227b4505753}\label{structrbda_1_1MotionVector_a49499e862ac451f34f248227b4505753}} 
+Eigen\+::\+Matrix$<$ myfloat, 3, 1 $>$ {\bfseries v}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_aa4f050c90d828fe72f90af01a88b81c3}\label{structrbda_1_1MotionVector_aa4f050c90d828fe72f90af01a88b81c3}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&mv)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_adeca7a246a45affd57e367fd35ca0233}\label{structrbda_1_1MotionVector_adeca7a246a45affd57e367fd35ca0233}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries operator+} (const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&lhs, const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_acd12ab3ebb220a2b72c29c9df363e79a}\label{structrbda_1_1MotionVector_acd12ab3ebb220a2b72c29c9df363e79a}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries operator-\/} (const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&lhs, const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_afa7408b990ec5517748a40607e5e2275}\label{structrbda_1_1MotionVector_afa7408b990ec5517748a40607e5e2275}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries operator$\ast$} (const myfloat \&lhs, const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&rhs)
+\item 
+\mbox{\Hypertarget{structrbda_1_1MotionVector_a890e531764aa56c34be6f4fe41991ac1}\label{structrbda_1_1MotionVector_a890e531764aa56c34be6f4fe41991ac1}} 
+\mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} {\bfseries operator$\ast$} (const \mbox{\hyperlink{structrbda_1_1MotionVector}{Motion\+Vector}} \&lhs, const myfloat \&rhs)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 140 of file data\+\_\+structures.\+hxx.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/abhijee/\+Documents/\+Git\+Hub/\+Digit\+\_\+\+RBKD/include/digit\+\_\+rbkd/rbda/data\+\_\+structures.\+hxx\end{DoxyCompactItemize}

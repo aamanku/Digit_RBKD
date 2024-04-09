@@ -30,6 +30,7 @@ SOFTWARE.
 
 using namespace rbda;
 
+/// Enum for the body indices
 enum DigitBodyIdx : myint {
     world_id=-1,
     base_trans_id,
@@ -67,6 +68,7 @@ enum DigitBodyIdx : myint {
     total_bodies
 };
 
+/// Enum for the site indices
 enum DigitSiteIdx : myint {
     imu_id=0,
     left_foot_id,
@@ -76,6 +78,10 @@ enum DigitSiteIdx : myint {
     total_sites
 };
 
+/**
+ * @brief Class for the DigitModel
+ * @details Created after mujoco model of digit.
+ */
 class DigitModel: public RigidBodyTree {
 public:
     DigitModel();

@@ -30,10 +30,6 @@ add_executable(use_generated_code src/use_generated_code.cpp
                                     codegen/src/digit_rbkd.cpp)
 target_link_libraries(use_generated_code Eigen3::Eigen)
 
-
-
-
-
 ###  Testing  ###
 add_executable(digit_model_test src/test/digit_model.cpp)
 target_link_libraries(digit_model_test Eigen3::Eigen casadi digit_model_library)
@@ -45,6 +41,9 @@ add_executable(casadi_symbolic_eigen src/test/casadi_symbolic_eigen.cpp)
 #                                                        include/digit_rbkd/digit_model.hxx)
 target_link_libraries(casadi_symbolic_eigen Eigen3::Eigen casadi digit_model_library)
 add_test(NAME casadi_symbolic_eigen COMMAND casadi_symbolic_eigen)
+
+###
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

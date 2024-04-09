@@ -1,0 +1,55 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Main Page}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Digit\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}RBKD}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Work in Progress}{1}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Hierarchical Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class Hierarchy}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Class Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Class List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Eigen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::internal\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::cast\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}impl$<$ casadi\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::SX, Scalar $>$ Struct Template Reference}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{7}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Digit\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Model Class Reference}{7}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{8}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Casadi\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Eigen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Code\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Gen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Dynamic\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Size\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}CG Class Reference}{8}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{9}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Member Function Documentation}{9}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}add\_casadi\_function()}{9}{subsubsection.4.3.2.1}%
+\contentsline {section}{\numberline {4.4}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Er\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}struct Struct Reference}{10}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{10}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Casadi\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Eigen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Code\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Gen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Fixed\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Size\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}CG Class Reference}{11}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{12}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Member Function Documentation}{12}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}add\_casadi\_function()}{12}{subsubsection.4.5.2.1}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}generate\_eigen\_function\_signature()}{13}{subsubsection.4.5.2.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.3}generate\_eigen\_function\_source()}{14}{subsubsection.4.5.2.3}%
+\contentsline {subsubsection}{\numberline {4.5.2.4}get\_casadi\_function\_io\_dims()}{15}{subsubsection.4.5.2.4}%
+\contentsline {subsubsection}{\numberline {4.5.2.5}get\_casadi\_function\_io\_names()}{15}{subsubsection.4.5.2.5}%
+\contentsline {section}{\numberline {4.6}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Force\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vector Struct Reference}{16}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{17}{subsection.4.6.1}%
+\contentsline {section}{\numberline {4.7}Joint Struct Reference}{17}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{17}{subsection.4.7.1}%
+\contentsline {section}{\numberline {4.8}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::mc\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}struct Struct Reference}{17}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{18}{subsection.4.8.1}%
+\contentsline {section}{\numberline {4.9}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Motion\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Subspace Struct Reference}{18}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{18}{subsection.4.9.1}%
+\contentsline {section}{\numberline {4.10}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Motion\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Vector Struct Reference}{18}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{19}{subsection.4.10.1}%
+\contentsline {section}{\numberline {4.11}Eigen\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Num\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Traits$<$ casadi\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::SX $>$ Struct Reference}{19}{section.4.11}%
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{20}{subsection.4.11.1}%
+\contentsline {section}{\numberline {4.12}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Plucker\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Transform Struct Reference}{20}{section.4.12}%
+\contentsline {subsection}{\numberline {4.12.1}Detailed Description}{20}{subsection.4.12.1}%
+\contentsline {section}{\numberline {4.13}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Pose Struct Reference}{21}{section.4.13}%
+\contentsline {subsection}{\numberline {4.13.1}Detailed Description}{21}{subsection.4.13.1}%
+\contentsline {section}{\numberline {4.14}Rigid\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Body Struct Reference}{21}{section.4.14}%
+\contentsline {subsection}{\numberline {4.14.1}Detailed Description}{22}{subsection.4.14.1}%
+\contentsline {section}{\numberline {4.15}Rigid\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Body\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tree Class Reference}{22}{section.4.15}%
+\contentsline {subsection}{\numberline {4.15.1}Detailed Description}{23}{subsection.4.15.1}%
+\contentsline {subsection}{\numberline {4.15.2}Member Function Documentation}{24}{subsection.4.15.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.1}kappa()}{24}{subsubsection.4.15.2.1}%
+\contentsline {subsubsection}{\numberline {4.15.2.2}print\_state()}{24}{subsubsection.4.15.2.2}%
+\contentsline {section}{\numberline {4.16}Site Struct Reference}{25}{section.4.16}%
+\contentsline {subsection}{\numberline {4.16.1}Detailed Description}{25}{subsection.4.16.1}%
+\contentsline {section}{\numberline {4.17}rbda\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Spatial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Inertia Struct Reference}{26}{section.4.17}%
+\contentsline {subsection}{\numberline {4.17.1}Detailed Description}{26}{subsection.4.17.1}%
+\contentsline {chapter}{Index}{27}{section*.48}%
